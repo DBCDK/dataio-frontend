@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>dataio-commons</artifactId>
+    <groupId>dk.dbc</groupId>
+    <version>1.2-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>dataio-commons-utils</artifactId>
+  <name>dataio-commons-utils</name>
+  <packaging>pom</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>dk.dbc</groupId>
+      <artifactId>invariant-utils</artifactId>
+      <version>${invariant-utils.version}</version>
+    </dependency>
+  </dependencies>
+
+  <modules>
+    <module>addi-binding</module>
+    <module>binary-file-store</module>
+    <module>cache</module>
+    <module>file-store-service-connector</module>
+    <module>javascript</module>
+    <module>junit-xml</module>
+    <module>lang</module>
+    <module>log-store-service-connector</module>
+    <module>flow-store-service-connector</module>
+    <module>job-store-service-connector</module>
+    <module>url-resolver-service-connector</module>
+    <module>rr-harvester-service-connector</module>
+    <module>tickle-harvester-service-connector</module>
+    <module>periodic-jobs-harvester-service-connector</module>
+    <module>io</module>
+    <module>svn</module>
+    <module>service</module>
+    <module>stopwatch</module>
+    <module>test</module>
+  </modules>
+
+</project>
