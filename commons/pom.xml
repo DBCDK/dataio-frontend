@@ -8,13 +8,11 @@
     <parent>
         <artifactId>dataio-frontend</artifactId>
         <groupId>dk.dbc</groupId>
-        <version>2.0-SNAPSHOT</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>dataio-commons</artifactId>
-    <name>dataio-commons</name>
     <packaging>pom</packaging>
-    <version>1.2-SNAPSHOT</version>
 
     <modules>
         <!--    <module>conversion</module>-->

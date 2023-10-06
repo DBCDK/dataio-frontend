@@ -12,8 +12,4 @@
   </parent>
 
   <artifactId>dataio-commons-utils-junit-xml</artifactId>
-  <name>dataio-commons-utils-junit-xml</name>
-
-  <dependencies>
-  </dependencies>
 </project>

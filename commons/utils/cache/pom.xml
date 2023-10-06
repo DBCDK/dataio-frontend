@@ -12,5 +12,4 @@
     </parent>
 
     <artifactId>dataio-commons-utils-cache</artifactId>
-    <name>dataio-commons-utils-cache</name>
 </project>
