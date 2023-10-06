@@ -12,24 +12,20 @@
   </parent>
 
   <artifactId>dataio-commons-utils-lang</artifactId>
-  <name>dataio-commons-utils-lang</name>
 
   <dependencies>
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.8</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>dk.dbc</groupId>
       <artifactId>dbc-commons-json-binding</artifactId>
-      <version>${dbc-commons-json-binding.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
   </dependencies>
 </project>

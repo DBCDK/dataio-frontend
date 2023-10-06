@@ -12,30 +12,24 @@
   </parent>
 
   <artifactId>dataio-commons-utils-file-store-service-connector</artifactId>
-  <name>dataio-commons-utils-file-store-service-connector</name>
   <packaging>ejb</packaging>
 
   <dependencies>
     <dependency>
       <groupId>dk.dbc</groupId>
       <artifactId>dataio-commons-types</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>dk.dbc</groupId>
       <artifactId>dataio-commons-utils-service</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>dk.dbc</groupId>
       <artifactId>dataio-commons-utils-stopwatch</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>dk.dbc</groupId>
       <artifactId>dataio-commons-utils-test</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>dk.dbc</groupId>
@@ -44,25 +38,19 @@
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
-      <version>${javaee.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>${jersey.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>${jersey.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.connectors</groupId>
       <artifactId>jersey-apache-connector</artifactId>
-      <version>${jersey.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.glassfish.jersey.core</groupId>
@@ -77,8 +65,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -96,14 +82,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-ejb-plugin</artifactId>
-        <version>${maven.ejb.plugin.version}</version>
         <configuration>
           <ejbVersion>${ejb.version}</ejbVersion>
           <filterDeploymentDescriptor>true</filterDeploymentDescriptor>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
-
 </project>

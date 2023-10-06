@@ -1,0 +1,6 @@
+
+<module>
+  <source path="">
+    <include name="**/*.java"/>
+  </source>
+</module>
