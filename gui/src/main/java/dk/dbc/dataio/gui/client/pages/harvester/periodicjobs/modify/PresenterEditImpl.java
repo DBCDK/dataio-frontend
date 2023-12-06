@@ -132,11 +132,10 @@ public class PresenterEditImpl<Place extends EditPlace> extends PresenterImpl {
     private void handleHarvesterType() {
         if (config != null) {
             final View view = getView();
-            view.holdingsSection.setVisible(false);
-
             if (config.getContent().getHarvesterType() == PeriodicJobsHarvesterConfig.HarvesterType.STANDARD_WITH_HOLDINGS) {
                 if (config.getContent().getHoldingsFilter() != null) {
-                    view.holdingsTypeSelection.setValue(config.getContent().getHoldingsFilter().name());
+                    view.holdingsTypeSelection.setSelected(config.getContent().getHoldingsFilter().ordinal());
+                    LOGGER.info("Setting holdings filter:"+(config.getContent().getHoldingsFilter().name()));
                 }
                 view.holdingsSection.setVisible(true);
                 view.holdingsSolrUrl.setText(config.getContent().getHoldingsSolrUrl());
@@ -145,7 +144,6 @@ public class PresenterEditImpl<Place extends EditPlace> extends PresenterImpl {
                 view.holdingsTypeSelection.setValue(null);
                 view.holdingsSolrUrl.setText(config.getContent().getHoldingsSolrUrl());
             }
-
         }
 
     }

@@ -98,7 +98,6 @@ public class NavigationPanel extends DockLayoutPanel {
         this.placeController = placeController;
         add(uiBinder.createAndBindUi(this));
         commonInjector.getConfigProxyAsync().getConfigResource(ConfigConstants.SATURN_URL, new GetSaturnUrlCallback());
-
         jobs.setUserObject(ShowJobsPlace.class);
         periodicJobs.setUserObject(ShowPeriodicJobsPlace.class);
         testJobs.setUserObject(ShowTestJobsPlace.class);
@@ -164,6 +163,7 @@ public class NavigationPanel extends DockLayoutPanel {
             if (object instanceof TreeItem) {
                 doSelect((TreeItem) object);
             } else if (object instanceof String) {
+                //Window.Location.replace((String) object);
                 Window.open((String) object, "_blank", "");
             } else {
                 placeController.goTo(getNewInstance(object));

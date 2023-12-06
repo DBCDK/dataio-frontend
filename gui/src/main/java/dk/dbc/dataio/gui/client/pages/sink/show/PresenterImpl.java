@@ -4,10 +4,15 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import dk.dbc.dataio.commons.types.SinkContent;
+import dk.dbc.dataio.commons.types.config.ConfigConstants;
 import dk.dbc.dataio.gui.client.exceptions.FilteredAsyncCallback;
 import dk.dbc.dataio.gui.client.exceptions.ProxyErrorTranslator;
 import dk.dbc.dataio.gui.client.model.SinkModel;
+import dk.dbc.dataio.gui.client.pages.navigation.NavigationPanel;
 import dk.dbc.dataio.gui.client.pages.sink.modify.CreatePlace;
 import dk.dbc.dataio.gui.client.pages.sink.modify.EditPlace;
 import dk.dbc.dataio.gui.client.util.CommonGinjector;
@@ -17,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 
 /**
@@ -29,6 +35,7 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
 
     PlaceController placeController;
     private String header;
+    private String gui20;
 
     /**
      * Default constructor
@@ -39,6 +46,15 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
     public PresenterImpl(PlaceController placeController, String header) {
         this.placeController = placeController;
         this.header = header;
+        commonInjector.getConfigProxyAsync().getConfigResource(ConfigConstants.GUI_2_0_URL, new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert(commonInjector.getMenuTexts().error_SystemPropertyCouldNotBeRead());
+            }
+            public void onSuccess(String s) {
+                gui20 = s;
+            }
+        });
     }
 
 
@@ -67,6 +83,12 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
     @Override
     public void editSink(SinkModel model) {
         this.placeController.goTo(new EditPlace(model));
+//         To come: Get the user safely to the new gui
+//        if (gui20 != null && !gui20.isEmpty() && model.getSinkType() == SinkContent.SinkType.DUMMY) {
+//            Window.Location.replace(gui20 + "?sink=" + model.getId());
+//        } else {
+//            this.placeController.goTo(new EditPlace(model));
+//        }
     }
 
     /**

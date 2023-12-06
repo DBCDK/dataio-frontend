@@ -19,9 +19,11 @@ import dk.dbc.dataio.harvester.types.SFtpPickup;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 public abstract class PresenterImpl extends AbstractActivity implements Presenter {
+    Logger LOGGER = Logger.getLogger("Edit periodicjobs");
     ViewGinjector viewInjector = GWT.create(ViewGinjector.class);
     CommonGinjector commonInjector = GWT.create(CommonGinjector.class);
     String urlDataioFilestoreRs = null;
@@ -160,6 +162,7 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
 
     @Override
     public void holdingsTypeSelectionChanged(PeriodicJobsHarvesterConfig.HoldingsFilter holdingsFilter) {
+        LOGGER.info("Filter:"+holdingsFilter);
         if (config != null) {
             config.getContent().withHoldingsFilter(holdingsFilter);
         }
