@@ -229,6 +229,8 @@ public class HarvestersTable extends CellTable {
                 return texts.columnValue_HarvesterType_SUBJECT_PROOFING();
             case STANDARD_WITH_HOLDINGS:
                 return texts.columnValue_HarvesterType_STANDARD_WITH_HOLDINGS();
+            case STANDARD_WITHOUT_EXPANSION:
+                return texts.columnValue_HarvesterType_STANDARD_WITHOUT_EXPANSION();
             default:
                 return type.name();
         }

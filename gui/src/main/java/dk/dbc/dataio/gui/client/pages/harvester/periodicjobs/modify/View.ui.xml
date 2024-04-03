@@ -23,6 +23,7 @@
                 <prompted:item value="DAILY_PROOFING"><g:Label><ui:text from="{txt.selection_HarvesterType_DAILY_PROOFING}"/></g:Label></prompted:item>
                 <prompted:item value="SUBJECT_PROOFING"><g:Label><ui:text from="{txt.selection_HarvesterType_SUBJECT_PROOFING}"/></g:Label></prompted:item>
                 <prompted:item value="STANDARD_WITH_HOLDINGS"><g:Label><ui:text from="{txt.selection_HarvesterType_STANDARD_WITH_HOLDINGS}"/></g:Label></prompted:item>
+                <prompted:item value="STANDARD_WITHOUT_EXPANSION"><g:Label><ui:text from="{txt.selection_HarvesterType_STANDARD_WITHOUT_EXPANSION}"/></g:Label></prompted:item>
             </prompted:PromptedList>
         </li>
         <li><prompted:PromptedTextBox ui:field="name" guiId="harvesternamepanel" prompt="{txt.prompt_Name}"/></li>
