@@ -11,19 +11,11 @@ pipeline {
 		maven 'Maven 3'
     }
     environment {
-        MAVEN_OPTS="-Dmaven.repo.local=/home/isworker/.m2/dataio-frontend-repo -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+        MAVEN_OPTS="-Dmaven.repo.local=${env.WORKSPACE}/.m2/dataio-frontend-repo -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
         ARTIFACTORY_LOGIN = credentials("artifactory_login")
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         BUILD_NUMBER="${env.BUILD_NUMBER}"
-        DEPLOY_ARTIFACTS="commons/utils/flow-store-service-connector, \
-            commons/utils/tickle-harvester-service-connector, \
-            harvester/framework, \
-            gatekeeper, \
-            harvester/utils/rawrepo-connector, \
-            harvester/utils/harvester-job-builder, \
-            commons/utils, \
-            commons/utils/binary-file-store, \
-            cli/acc-test-runner"
+        DOCKER_LABEL="${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
     }
     triggers {
         upstream(upstreamProjects: "Docker-payara5-bump-trigger",
@@ -41,18 +33,7 @@ pipeline {
         stage('clean and checkout') {
             steps {
                 cleanWs()
-                sh """
-                    #test -d /home/isworker/.m2/dataio-frontend-repo/dk/dbc && rm -r /home/isworker/.m2/dataio-frontend-repo/dk/dbc || echo ok
-                """
                 checkout scm
-                script {
-                    DEPLOY_TO_STAGING_CANDIDATE|=sh(
-                            returnStatus: true,
-                            script: """#!/bin/bash
-                                git log -1 | tail +5 | grep -E ' *!'
-                            """
-                    ) == 0
-                }
             }
         }
         stage("build") {
@@ -83,14 +64,13 @@ pipeline {
                 }
             }
         }
-        stage("deploy to mavenrepo.dbc.dk") {
+        stage("push to artifactory ") {
             when {
                 branch "jenkins-build"
             }
             steps {
                 sh """
-                mvn install -T 3 -B -Dmaven.test.skip=true -Pdocker-push
-                mvn deploy -T 6 -B -Dmaven.test.skip=true -Ddocker.skip=true -pl "${DEPLOY_ARTIFACTS}" -am
+                docker push docker-metascrum.artifacts.dbccloud.dk/dataio-gui:${DOCKER_LABEL}
             """
             }
         }
