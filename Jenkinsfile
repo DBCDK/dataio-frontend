@@ -80,14 +80,12 @@ pipeline {
 
                     def spotbugs = scanForIssues tool: [$class: 'SpotBugs']
                     publishIssues issues: [spotbugs], unstableTotalAll: 1
-                    archiveArtifacts artifacts: "cli/acceptance-test/target/dataio-cli-acctest.jar,gatekeeper/target/dataio-gatekeeper*.jar,cli/dataio-cli",
-                            fingerprint: true
                 }
             }
         }
         stage("deploy to mavenrepo.dbc.dk") {
             when {
-                branch "master"
+                branch "jenkins-build"
             }
             steps {
                 sh """
@@ -102,8 +100,8 @@ pipeline {
             }
             steps {
                 sh """
-                ./docker/remove-images docker-metascrum.artifacts.dbccloud.dk/dbc-payara-*
-                ./docker/remove-images docker-metascrum.artifacts.dbccloud.dk/dataio-*
+                #./docker/remove-images docker-metascrum.artifacts.dbccloud.dk/dbc-payara-*
+                #./docker/remove-images docker-metascrum.artifacts.dbccloud.dk/dataio-*
             """
             }
         }
