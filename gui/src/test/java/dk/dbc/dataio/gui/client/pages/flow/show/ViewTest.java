@@ -3,9 +3,7 @@ package dk.dbc.dataio.gui.client.pages.flow.show;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwtmockito.GwtMockitoTestRunner;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
-import dk.dbc.dataio.gui.client.modelBuilders.FlowComponentModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.FlowModelBuilder;
 import dk.dbc.dataio.gui.client.util.CommonGinjector;
 import org.junit.Before;
@@ -45,12 +43,9 @@ public class ViewTest {
     ViewGinjector mockedViewGinjector;
 
     // Test Data
-    private FlowComponentModel flowComponentModel1 = new FlowComponentModelBuilder().setName("FCnam1").setSvnRevision("FCsrv1").setSvnNext("FCsrv1").build();
-    private FlowComponentModel flowComponentModel2 = new FlowComponentModelBuilder().setName("FCnam2").setSvnRevision("FCsrv2").setSvnNext("FCsrv4").build();
-    private FlowComponentModel flowComponentModel3 = new FlowComponentModelBuilder().setName("FCnam3").setSvnRevision("FCsrv3").setSvnNext("").build();
-    private FlowModel flowModel1 = new FlowModelBuilder().setName("Fnam1").setTimeOfFlowComponentUpdate("2016-11-18 15:24:40").setComponents(Collections.singletonList(flowComponentModel1)).build();
-    private FlowModel flowModel2 = new FlowModelBuilder().setName("Fnam2").setComponents(Arrays.asList(flowComponentModel2, flowComponentModel3)).build();
-    private FlowModel flowModel3 = new FlowModelBuilder().setName("Fnam3").setComponents(Collections.singletonList(flowComponentModel3)).build();
+    private FlowModel flowModel1 = new FlowModelBuilder().setName("Fnam1").setTimeOfLastModification("2016-11-18 15:24:40").build();
+    private FlowModel flowModel2 = new FlowModelBuilder().setName("Fnam2").build();
+    private FlowModel flowModel3 = new FlowModelBuilder().setName("Fnam3").build();
     private List<FlowModel> flowModels = Arrays.asList(flowModel1, flowModel2);
 
     // Subject Under Test
@@ -62,12 +57,9 @@ public class ViewTest {
     final static String MOCKED_LABEL_FLOWS = "Mocked Text: label_Flows";
     final static String MOCKED_COLUMNHEADER_NAME = "Mocked Text: columnHeader_Name";
     final static String MOCKED_COLUMNHEADER_DESCRIPTION = "Mocked Text: columnHeader_Description";
-    final static String MOCKED_COLUMNHEADER_FLOWCOMPONENTS = "Mocked Text: columnHeader_FlowComponents";
-    final static String MOCKED_COLUMNHEADER_TIME_OF_FLOW_COMPONENT_UPDATE = "Mocked Text: columnHeader_TimeOfFlowComponentUpdate";
-    final static String MOCKED_COLUMNHEADER_ACTION_REFRESH = "Mocked Text: columnHeader_Action_Refresh";
-    final static String MOCKED_COLUMNHEADER_ACTION_EDIT = "Mocked Text: columnHeader_Action_edit";
-    final static String MOCKED_BUTTON_REFRESH = "Mocked Text: button_Refresh";
-    final static String MOCKED_BUTTON_EDIT = "Mocked Text: button_Edit";
+    final static String MOCKED_COLUMNHEADER_TIME_OF_LAST_MODIFICATON = "Mocked Text: columnHeader_TimeOfLastModification";
+    final static String MOCKED_COLUMNHEADER_ACTION_DELETE = "Mocked Text: columnHeader_Action_delete";
+    final static String MOCKED_BUTTON_DELETE = "Mocked Text: button_Delete";
 
     class ViewConcrete extends View {
         public ViewConcrete() {
@@ -91,12 +83,9 @@ public class ViewTest {
         when(mockedTexts.label_Flows()).thenReturn(MOCKED_LABEL_FLOWS);
         when(mockedTexts.columnHeader_Name()).thenReturn(MOCKED_COLUMNHEADER_NAME);
         when(mockedTexts.columnHeader_Description()).thenReturn(MOCKED_COLUMNHEADER_DESCRIPTION);
-        when(mockedTexts.columnHeader_FlowComponents()).thenReturn(MOCKED_COLUMNHEADER_FLOWCOMPONENTS);
-        when(mockedTexts.columnHeader_TimeOfFlowComponentUpdate()).thenReturn(MOCKED_COLUMNHEADER_TIME_OF_FLOW_COMPONENT_UPDATE);
-        when(mockedTexts.columnHeader_Action_Refresh()).thenReturn(MOCKED_COLUMNHEADER_ACTION_REFRESH);
-        when(mockedTexts.columnHeader_Action_Edit()).thenReturn(MOCKED_COLUMNHEADER_ACTION_EDIT);
-        when(mockedTexts.button_Refresh()).thenReturn(MOCKED_BUTTON_REFRESH);
-        when(mockedTexts.button_Edit()).thenReturn(MOCKED_BUTTON_EDIT);
+        when(mockedTexts.columnHeader_TimeOfLastModification()).thenReturn(MOCKED_COLUMNHEADER_TIME_OF_LAST_MODIFICATON);
+        when(mockedTexts.columnHeader_Action_Delete()).thenReturn(MOCKED_COLUMNHEADER_ACTION_DELETE);
+        when(mockedTexts.button_Delete()).thenReturn(MOCKED_BUTTON_DELETE);
     }
 
     @Test
@@ -108,10 +97,8 @@ public class ViewTest {
         // Verify invocations
         verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_NAME));
         verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_DESCRIPTION));
-        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_FLOWCOMPONENTS));
-        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_TIME_OF_FLOW_COMPONENT_UPDATE));
-        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_ACTION_REFRESH));
-        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_ACTION_EDIT));
+        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_TIME_OF_LAST_MODIFICATON));
+        verify(view.flowsTable).addColumn(isA(Column.class), eq(MOCKED_COLUMNHEADER_ACTION_DELETE));
     }
 
     @Test
@@ -174,87 +161,28 @@ public class ViewTest {
         setupView();
 
         // Subject Under Test
-        Column column = view.constructTimeOfFlowComponentUpdateColumn();
+        Column column = view.constructTimeOfLastModificationColumn();
 
         // Test that correct getValue handler has been setup
-        assertThat(column.getValue(flowModel1), is(flowModel1.getTimeOfFlowComponentUpdate()));
+        assertThat(column.getValue(flowModel1), is(flowModel1.getTimeOfLastModification()));
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void constructFlowComponentsColumn_oneFlowComponentWithSvnNext_correctlySetup() {
+    public void constructDeleteActionColumn_call_correctlySetup() {
         setupView();
 
         // Subject Under Test
-        Column column = view.constructFlowComponentsColumn();
+        Column column = view.constructDeleteActionColumn();
 
         // Test that correct getValue handler has been setup
-        String expected = flowComponentModel1.getName() + " (SVN Rev. " + flowComponentModel1.getSvnRevision() + ", SVN Next. " + flowComponentModel1.getSvnNext() + ")";
-        assertThat(column.getValue(flowModel1), is(expected));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void constructFlowComponentsColumn_oneFlowComponentWithEmptySvnNext_correctlySetup() {
-        setupView();
-
-        // Subject Under Test
-        Column column = view.constructFlowComponentsColumn();
-
-        // Test that correct getValue handler has been setup
-        String expected = flowComponentModel3.getName() + " (SVN Rev. " + flowComponentModel3.getSvnRevision() + ")";
-        assertThat(column.getValue(flowModel3), is(expected));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void constructFlowComponentsColumn_twoFlowComponents_correctlySetup() {
-        setupView();
-
-        // Subject Under Test
-        Column column = view.constructFlowComponentsColumn();
-
-        // Test that correct getValue handler has been setup
-        String expected =
-                flowComponentModel2.getName() + " (SVN Rev. " + flowComponentModel2.getSvnRevision() + ", SVN Next. " + flowComponentModel2.getSvnNext() + "), " +
-                        flowComponentModel3.getName() + " (SVN Rev. " + flowComponentModel3.getSvnRevision() + ")";
-        assertThat(column.getValue(flowModel2), is(expected));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void constructRefreshActionColumn_call_correctlySetup() {
-        setupView();
-
-        // Subject Under Test
-        Column column = view.constructRefreshActionColumn();
-
-        // Test that correct getValue handler has been setup
-        assertThat((String) column.getValue(flowModel1), is(mockedTexts.button_Refresh()));
+        assertThat((String) column.getValue(flowModel1), is(mockedTexts.button_Delete()));
 
         // Test that the right action is activated upon click
         view.setPresenter(mockedPresenter);
         FieldUpdater fieldUpdater = column.getFieldUpdater();
         fieldUpdater.update(334, flowModel1, "Updated Button Text");  // Simulate a click on the column
-        verify(mockedPresenter).refreshFlowComponents(flowModel1);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void constructEditActionColumn_call_correctlySetup() {
-        setupView();
-
-        // Subject Under Test
-        Column column = view.constructEditActionColumn();
-
-        // Test that correct getValue handler has been setup
-        assertThat((String) column.getValue(flowModel1), is(mockedTexts.button_Edit()));
-
-        // Test that the right action is activated upon click
-        view.setPresenter(mockedPresenter);
-        FieldUpdater fieldUpdater = column.getFieldUpdater();
-        fieldUpdater.update(334, flowModel1, "Updated Button Text");  // Simulate a click on the column
-        verify(mockedPresenter).editFlow(flowModel1);
+        verify(mockedPresenter).deleteFlow(flowModel1);
     }
 
     private void setupView() {

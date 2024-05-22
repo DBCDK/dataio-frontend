@@ -6,8 +6,6 @@
 
     <g:HTMLPanel>
 
-        <g:Button ui:field="createButton" text="{txt.button_Create}" />
-
         <table cellspacing='0' cellpadding='0' style='width:100%;'>
             <tr>
                 <td id="flows-show-table" valign='top'>
@@ -15,7 +13,6 @@
                 </td>
             </tr>
         </table>
-
     </g:HTMLPanel>
 
 </ui:UiBinder>

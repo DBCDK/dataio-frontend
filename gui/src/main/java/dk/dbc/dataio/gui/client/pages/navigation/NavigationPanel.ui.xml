@@ -20,7 +20,6 @@
                     <g:TreeItem text="{txt.menu_FlowBinderStatus}" ui:field="flowBinderStatus"/>
                 </g:TreeItem>
                 <g:TreeItem text="{txt.menu_Flows}" ui:field="flows"/>
-                <g:TreeItem text="{txt.menu_FlowComponents}" ui:field="flowComponents"/>
                 <g:TreeItem text="{txt.menu_Harvesters}" ui:field="harvesters">
                     <g:TreeItem text="{txt.menu_TickleHarvesters}" ui:field="tickleHarvesters"/>
                     <g:TreeItem text="{txt.menu_RrHarvesters}" ui:field="rrHarvesters"/>

@@ -8,8 +8,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import dk.dbc.dataio.gui.client.exceptions.FilteredAsyncCallback;
 import dk.dbc.dataio.gui.client.exceptions.ProxyErrorTranslator;
 import dk.dbc.dataio.gui.client.model.FlowModel;
-import dk.dbc.dataio.gui.client.pages.flow.modify.CreatePlace;
-import dk.dbc.dataio.gui.client.pages.flow.modify.EditPlace;
 import dk.dbc.dataio.gui.client.util.CommonGinjector;
 
 import java.util.HashSet;
@@ -46,37 +44,6 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
         fetchFlows();
     }
 
-
-    /**
-     * This method opens a new view, for editing the flow in question
-     *
-     * @param model The model for the flow to edit
-     */
-    @Override
-    public void editFlow(FlowModel model) {
-        placeController.goTo(new EditPlace(model));
-    }
-
-
-    /**
-     * This method refreshes all flowcomponents in the flow, passed as a parameter in the call to the method
-     *
-     * @param model The flow model, in which all flow components is refreshed
-     */
-    @Override
-    public void refreshFlowComponents(FlowModel model) {
-        commonInjector.getFlowStoreProxyAsync().refreshFlowComponents(model.getId(), model.getVersion(), new RefreshFlowComponentsCallback());
-    }
-
-    /**
-     * This method opens a new view, for creating a new flow
-     */
-    @Override
-    public void createFlow() {
-        getView().selectionModel.clear();
-        placeController.goTo(new CreatePlace());
-    }
-
     /*
      * Local methods
      */
@@ -109,6 +76,11 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
         }
     }
 
+    @Override
+    public void deleteFlow(FlowModel flow) {
+        commonInjector.getFlowStoreProxyAsync().deleteFlow(flow.getId(), flow.getVersion(), new DeleteFlowCallback());
+    }
+
     /*
      * Private classes
      */
@@ -136,16 +108,15 @@ public class PresenterImpl extends AbstractActivity implements Presenter {
         }
     }
 
-    protected class RefreshFlowComponentsCallback extends FilteredAsyncCallback<FlowModel> {
+    class DeleteFlowCallback extends FilteredAsyncCallback<Void> {
         @Override
         public void onFilteredFailure(Throwable e) {
             getView().setErrorText(ProxyErrorTranslator.toClientErrorFromFlowStoreProxy(e, commonInjector.getProxyErrorTexts(), null));
         }
 
         @Override
-        public void onSuccess(FlowModel model) {
+        public void onSuccess(Void aVoid) {
             fetchFlows();
         }
     }
-
 }

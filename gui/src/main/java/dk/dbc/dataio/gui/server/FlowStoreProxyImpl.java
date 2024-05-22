@@ -3,14 +3,10 @@ package dk.dbc.dataio.gui.server;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnector;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnectorException;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnectorUnexpectedStatusCodeException;
-import dk.dbc.dataio.commons.javascript.JavaScriptProject;
-import dk.dbc.dataio.commons.javascript.JavaScriptProjectException;
 import dk.dbc.dataio.commons.javascript.JavaScriptSubversionProject;
 import dk.dbc.dataio.commons.types.Flow;
 import dk.dbc.dataio.commons.types.FlowBinder;
 import dk.dbc.dataio.commons.types.FlowBinderIdent;
-import dk.dbc.dataio.commons.types.FlowComponent;
-import dk.dbc.dataio.commons.types.FlowComponentView;
 import dk.dbc.dataio.commons.types.FlowView;
 import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.commons.types.Sink;
@@ -26,16 +22,13 @@ import dk.dbc.dataio.gui.client.exceptions.ProxyException;
 import dk.dbc.dataio.gui.client.exceptions.StatusCodeTranslator;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
 import dk.dbc.dataio.gui.client.model.SinkModel;
 import dk.dbc.dataio.gui.client.model.SubmitterModel;
 import dk.dbc.dataio.gui.client.proxies.FlowStoreProxy;
-import dk.dbc.dataio.gui.client.proxies.JavaScriptProjectFetcher.fetchRequiredJavaScriptResult;
 import dk.dbc.dataio.gui.client.querylanguage.GwtIntegerClause;
 import dk.dbc.dataio.gui.client.querylanguage.GwtQueryClause;
 import dk.dbc.dataio.gui.server.modelmappers.FlowBinderModelMapper;
-import dk.dbc.dataio.gui.server.modelmappers.FlowComponentModelMapper;
 import dk.dbc.dataio.gui.server.modelmappers.FlowModelMapper;
 import dk.dbc.dataio.gui.server.modelmappers.SinkModelMapper;
 import dk.dbc.dataio.gui.server.modelmappers.SubmitterModelMapper;
@@ -115,44 +108,6 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
      * Flows
      */
     @Override
-    public FlowModel createFlow(FlowModel model) throws NullPointerException, ProxyException {
-        final String callerMethodName = "createFlow";
-        log.trace("FlowStoreProxy: " + callerMethodName + "(\"{}\");", model.getFlowName());
-        Flow flow = null;
-        List<FlowComponent> flowComponents;
-        try {
-            flowComponents = getFlowComponentsLatestVersion(model.getFlowComponents());
-            flow = flowStoreServiceConnector.createFlow(FlowModelMapper.toFlowContent(model, flowComponents));
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowModelMapper.toModel(flow);
-    }
-
-    public FlowModel updateFlow(FlowModel model) throws NullPointerException, ProxyException {
-        final String callerMethodName = "updateFlow";
-        log.trace("FlowStoreProxy: " + callerMethodName + "({});", model.getId(), model.getVersion());
-        Flow flow = null;
-        List<FlowComponent> flowComponents;
-        try {
-            // Retrieve the currently saved version of the flow
-            Flow flowOpenedForUpdate = flowStoreServiceConnector.getFlow(model.getId());
-
-            // If the flow has been updated by another user: Throw proxyException - conflict error
-            if (model.getVersion() != flowOpenedForUpdate.getVersion()) {
-                log.error("FlowStoreProxy: updateFlow - Concurrent Update Error");
-                throw new ProxyException(ProxyError.CONFLICT_ERROR, "Concurrent Update Error");
-            } else {
-                flowComponents = getFlowComponents(flowOpenedForUpdate, model.getFlowComponents());
-                flow = flowStoreServiceConnector.updateFlow(FlowModelMapper.toFlowContent(model, flowComponents), model.getId(), model.getVersion());
-            }
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowModelMapper.toModel(flow);
-    }
-
-    @Override
     public void deleteFlow(long flowId, long version) throws NullPointerException, ProxyException {
         final String callerMethodName = "deleteFlow";
         log.trace("FlowStoreProxy: " + callerMethodName + "({}, {});", flowId, version);
@@ -187,103 +142,6 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
             handleExceptions(genericException, callerMethodName);
         }
         return FlowModelMapper.toModel(flow);
-    }
-
-    /*
-     * Flow Components
-     */
-
-    @Override
-    public FlowComponentModel createFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException {
-
-        final String callerMethodName = "createFlowComponent";
-        log.trace("FlowStoreProxy: " + callerMethodName + "(\"{}\");", model.getName());
-        FlowComponent flowComponent = null;
-        try {
-            FlowComponent createdFlowComponent = flowStoreServiceConnector.createFlowComponent(
-                    FlowComponentModelMapper.toFlowComponentContent(model, fetchRequiredJavaScripts(model)));
-
-            flowComponent = flowStoreServiceConnector.updateNext(
-                    FlowComponentModelMapper.toNext(model, fetchRequiredJavaScriptsForNext(model)),
-                    createdFlowComponent.getId(),
-                    createdFlowComponent.getVersion());
-
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowComponentModelMapper.toModel(flowComponent);
-    }
-
-    @Override
-    public FlowComponentModel updateFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException {
-        final String callerMethodName = "updateFlowComponent";
-        log.trace("FlowStoreProxy: " + callerMethodName + "({}, {});", model.getId(), model.getVersion());
-        FlowComponent flowComponent = null;
-        try {
-            final FlowComponent updatedContentFlowComponent = flowStoreServiceConnector.updateFlowComponent(
-                    FlowComponentModelMapper.toFlowComponentContent(model, fetchRequiredJavaScripts(model)),
-                    model.getId(),
-                    model.getVersion());
-
-            flowComponent = flowStoreServiceConnector.updateNext(
-                    FlowComponentModelMapper.toNext(model, fetchRequiredJavaScriptsForNext(model)),
-                    updatedContentFlowComponent.getId(),
-                    updatedContentFlowComponent.getVersion());
-
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowComponentModelMapper.toModel(flowComponent);
-    }
-
-    @Override
-    public FlowModel refreshFlowComponents(Long id, Long version) throws NullPointerException, ProxyException {
-        final String callerMethodName = "refreshFlowComponents";
-        log.trace("FlowStoreProxy: " + callerMethodName + "({}, {});", id, version);
-        Flow flow = null;
-        try {
-            flow = flowStoreServiceConnector.refreshFlowComponents(id, version);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowModelMapper.toModel(flow);
-    }
-
-    @Override
-    public void deleteFlowComponent(long flowComponentId, long version) throws NullPointerException, ProxyException {
-        final String callerMethodName = "deleteFlowComponent";
-        log.trace("FlowStoreProxy: " + callerMethodName + "({}, {});", flowComponentId, version);
-        try {
-            flowStoreServiceConnector.deleteFlowComponent(flowComponentId, version);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-    }
-
-    @Override
-    public List<FlowComponentModel> findAllFlowComponents() throws ProxyException {
-        final String callerMethodName = "findAllFlowComponents";
-        List<FlowComponentView> result = null;
-        log.trace("FlowStoreProxy: {}()", callerMethodName);
-        try {
-            result = flowStoreServiceConnector.findAllFlowComponents();
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowComponentModelMapper.fromListOfFlowComponentViews(result);
-    }
-
-    @Override
-    public FlowComponentModel getFlowComponent(Long id) throws ProxyException {
-        final String callerMethodName = "getFlowComponent";
-        FlowComponent result = null;
-        log.trace("FlowStoreProxy: " + callerMethodName + "({});", id);
-        try {
-            result = flowStoreServiceConnector.getFlowComponent(id);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return FlowComponentModelMapper.toModel(result);
     }
 
     /*
@@ -1095,90 +953,6 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
     private SinkModel getSinkModelLatestVersion(SinkModel sinkModel) throws FlowStoreServiceConnectorException {
         return SinkModelMapper.toModel(flowStoreServiceConnector.getSink(sinkModel.getId()));
     }
-
-    /**
-     * For each flow component model given as input, the method retrieves the latest version of a flow component
-     * from the flow store
-     *
-     * @param flowComponentModels containing information regarding which flow components should be retrieved from the flow store
-     * @return flowComponents, a list containing the retrieved flow components
-     * @throws FlowStoreServiceConnectorException Flowstore Service Connector Exception
-     */
-    private List<FlowComponent> getFlowComponentsLatestVersion(List<FlowComponentModel> flowComponentModels) throws FlowStoreServiceConnectorException {
-        List<FlowComponent> flowComponents = new ArrayList<>(flowComponentModels.size());
-        for (FlowComponentModel flowComponentModel : flowComponentModels) {
-            FlowComponent flowComponent = flowStoreServiceConnector.getFlowComponent(flowComponentModel.getId());
-            flowComponents.add(flowComponent);
-        }
-        return flowComponents;
-    }
-
-    /**
-     * This method loops through a list of flow component models and compares the id of each, with the id of the flow components nested
-     * within the flow.
-     * if the id is located, the method takes the flow component from the flow, and adds it to a list
-     * if the id is not located, the flow component is taken directly from the flow store and adds it to the list
-     * <p>
-     * This is done for the following reasons:
-     * The frontend object (flowComponentModel) does not contain the full data set needed by
-     * the backend object (flowComponent).
-     * <p>
-     * The flow component is nested within a flow. Therefore the flow components of an existing flow cannot be replaced by
-     * retrieving the latest version of the same flow component from the flow store.
-     *
-     * @param flow, the version of the flow that is currently saved in the underlying database
-     * @param model containing the updated flow data
-     * @return flowComponents, a list containing the flow components that should be used.
-     * @throws FlowStoreServiceConnectorException Flowstore Service Connector Exception
-     */
-    private List<FlowComponent> getFlowComponents(Flow flow, List<FlowComponentModel> model) throws FlowStoreServiceConnectorException {
-        List<FlowComponent> flowComponents = new ArrayList<>(model.size());
-        for (FlowComponentModel flowComponentModel : model) {
-            int counter = 0;
-            boolean isNewFlowComponent = true;
-            while (isNewFlowComponent && counter < flow.getContent().getComponents().size()) {
-                if (flowComponentModel.getId() == flow.getContent().getComponents().get(counter).getId()) {
-                    // The flow component lave been located within the existing flow. Re-use the flow component
-                    flowComponents.add(flow.getContent().getComponents().get(counter));
-                    // End loop.
-                    isNewFlowComponent = false;
-                }
-                counter++;
-            }
-            if (isNewFlowComponent) {
-                // Retrieve the latest version of the flow component from the flow store
-                flowComponents.add(flowStoreServiceConnector.getFlowComponent(flowComponentModel.getId()));
-            }
-        }
-        return flowComponents;
-    }
-
-    private fetchRequiredJavaScriptResult fetchRequiredJavaScripts(FlowComponentModel model) throws JavaScriptProjectFetcherException {
-        try {
-            final JavaScriptProject javaScriptProject = javaScriptSubversionProject.fetchRequiredJavaScript(
-                    model.getSvnProject(),
-                    Long.valueOf(model.getSvnRevision()),
-                    model.getInvocationJavascript(),
-                    model.getInvocationMethod());
-            return new fetchRequiredJavaScriptResult(javaScriptProject.getJavaScripts(), javaScriptProject.getRequireCache());
-        } catch (JavaScriptProjectException e) {
-            throw JavaScriptProjectFetcherServlet.asJavaScriptProjectFetcherException(e);
-        }
-    }
-
-    private fetchRequiredJavaScriptResult fetchRequiredJavaScriptsForNext(FlowComponentModel model) throws JavaScriptProjectFetcherException {
-        try {
-            final JavaScriptProject javaScriptProject = javaScriptSubversionProject.fetchRequiredJavaScript(
-                    model.getSvnProject(),
-                    Long.valueOf(model.getSvnNext()),
-                    model.getInvocationJavascript(),
-                    model.getInvocationMethod());
-            return new fetchRequiredJavaScriptResult(javaScriptProject.getJavaScripts(), javaScriptProject.getRequireCache());
-        } catch (JavaScriptProjectException e) {
-            throw JavaScriptProjectFetcherServlet.asJavaScriptProjectFetcherException(e);
-        }
-    }
-
 
     // Additional stuff for the Cache class to facilitate usage of exception throwing Supplier classes
 

@@ -12,11 +12,9 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import dk.dbc.dataio.gui.client.components.popup.PopupListBox;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
 import dk.dbc.dataio.gui.client.model.SinkModel;
 import dk.dbc.dataio.gui.client.modelBuilders.FlowBinderModelBuilder;
-import dk.dbc.dataio.gui.client.modelBuilders.FlowComponentModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.FlowModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.SinkModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.SubmitterModelBuilder;
@@ -66,9 +64,8 @@ public class FlowBindersTableTest {
 
 
     // Test Data
-    private FlowComponentModel flowComponentModel1 = new FlowComponentModelBuilder().build();
 
-    private FlowModel flowModel1 = new FlowModelBuilder().setComponents(Collections.singletonList(flowComponentModel1)).build();
+    private FlowModel flowModel1 = new FlowModelBuilder().build();
     private SinkModel sinkModel1 = new SinkModelBuilder().setName("SInam1").build();
 
     private FlowBinderModel flowBinderModelEmpty = new FlowBinderModelBuilder()

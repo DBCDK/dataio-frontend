@@ -45,8 +45,6 @@ public class NavigationPanel extends DockLayoutPanel {
     @UiField
     TreeItem flows;
     @UiField
-    TreeItem flowComponents;
-    @UiField
     TreeItem flowBinders;
     @UiField
     TreeItem sinks;
@@ -104,7 +102,6 @@ public class NavigationPanel extends DockLayoutPanel {
         acctestJobs.setUserObject(ShowAcctestJobsPlace.class);
         flowBinders.setUserObject(dk.dbc.dataio.gui.client.pages.flowbinder.show.Place.class);
         flows.setUserObject(dk.dbc.dataio.gui.client.pages.flow.show.Place.class);
-        flowComponents.setUserObject(dk.dbc.dataio.gui.client.pages.flowcomponent.show.Place.class);
         harvesters.setUserObject(rrHarvesters);
         tickleHarvesters.setUserObject(dk.dbc.dataio.gui.client.pages.harvester.ticklerepo.show.Place.class);
         rrHarvesters.setUserObject(dk.dbc.dataio.gui.client.pages.harvester.rr.show.Place.class);
@@ -191,9 +188,6 @@ public class NavigationPanel extends DockLayoutPanel {
         }
         if (object == dk.dbc.dataio.gui.client.pages.flow.show.Place.class) {
             return new dk.dbc.dataio.gui.client.pages.flow.show.Place();
-        }
-        if (object == dk.dbc.dataio.gui.client.pages.flowcomponent.show.Place.class) {
-            return new dk.dbc.dataio.gui.client.pages.flowcomponent.show.Place();
         }
         if (object == dk.dbc.dataio.gui.client.pages.harvester.ticklerepo.show.Place.class) {
             return new dk.dbc.dataio.gui.client.pages.harvester.ticklerepo.show.Place();

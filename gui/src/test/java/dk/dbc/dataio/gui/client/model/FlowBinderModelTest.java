@@ -2,7 +2,6 @@ package dk.dbc.dataio.gui.client.model;
 
 import dk.dbc.dataio.commons.types.Priority;
 import dk.dbc.dataio.commons.types.SinkContent;
-import dk.dbc.dataio.gui.client.modelBuilders.FlowComponentModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.FlowModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.SinkModelBuilder;
 import dk.dbc.dataio.gui.client.modelBuilders.SubmitterModelBuilder;
@@ -199,8 +198,7 @@ public class FlowBinderModelTest {
     }
 
     private FlowBinderModel getTestModel() {
-        FlowComponentModel flowComponentModel = new FlowComponentModelBuilder().build();
-        FlowModel flowModel = new FlowModelBuilder().setComponents(Collections.singletonList(flowComponentModel)).build();
+        FlowModel flowModel = new FlowModelBuilder().build();
         SubmitterModel submitterModel = new SubmitterModelBuilder().build();
         SinkModel sinkModel = new SinkModelBuilder().build();
         return new FlowBinderModel(11, 22, "Name", "Description", "Packaging", "Format", "Charset", "Destination", 4, "Record Splitter", flowModel, Collections.singletonList(submitterModel), sinkModel, "Queue Provider");
