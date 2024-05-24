@@ -1,5 +1,7 @@
 package dk.dbc.dataio.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.List;
 /**
  * Brief view for Flow DTO
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FlowView implements Serializable {
     private long id;
     private long version;
