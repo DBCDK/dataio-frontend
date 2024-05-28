@@ -8,7 +8,6 @@ import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.exceptions.ProxyException;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
 import dk.dbc.dataio.gui.client.model.SinkModel;
 import dk.dbc.dataio.gui.client.model.SubmitterModel;
@@ -27,28 +26,11 @@ import java.util.List;
 @RemoteServiceRelativePath("FlowStoreProxy")
 public interface FlowStoreProxy extends RemoteService {
     // Flows
-    FlowModel createFlow(FlowModel model) throws NullPointerException, ProxyException;
-
-    FlowModel updateFlow(FlowModel FlowContent) throws NullPointerException, ProxyException;
-
     void deleteFlow(long flowId, long version) throws ProxyException;
 
     List<FlowModel> findAllFlows() throws ProxyException;
 
     FlowModel getFlow(Long id) throws ProxyException;
-
-    // Flow Components
-    FlowComponentModel createFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException;
-
-    FlowComponentModel updateFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException;
-
-    FlowModel refreshFlowComponents(Long id, Long version) throws NullPointerException, ProxyException;
-
-    void deleteFlowComponent(long flowComponentId, long version) throws ProxyException;
-
-    List<FlowComponentModel> findAllFlowComponents() throws ProxyException;
-
-    FlowComponentModel getFlowComponent(Long id) throws ProxyException;
 
     // Flow Binders
     FlowBinderModel createFlowBinder(FlowBinderModel model) throws NullPointerException, ProxyException;

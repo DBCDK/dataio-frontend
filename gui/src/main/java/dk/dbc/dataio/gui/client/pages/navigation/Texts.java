@@ -25,15 +25,6 @@ public interface Texts extends Constants {
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String menu_FlowBinders();
 
-    @Constants.DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String menu_FlowComponentCreation();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String menu_FlowComponentEdit();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String menu_FlowComponents();
-
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String menu_Jobs();
 

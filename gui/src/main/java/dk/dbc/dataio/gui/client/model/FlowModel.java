@@ -2,30 +2,26 @@ package dk.dbc.dataio.gui.client.model;
 
 import dk.dbc.dataio.gui.client.util.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FlowModel extends GenericBackendModel {
 
     private String flowName;
     private String description;
-    private String timeOfFlowComponentUpdate;
-    private List<FlowComponentModel> flowComponents;
+    private String timeOfLastModification;
 
-    public FlowModel(long id, long version, String name, String description, String timeOfFlowComponentUpdate, List<FlowComponentModel> flowComponents) {
+    public FlowModel(long id, long version, String name, String description, String timeOfLastModification) {
         super(id, version);
         this.flowName = name;
         this.description = description;
-        this.timeOfFlowComponentUpdate = timeOfFlowComponentUpdate;
-        this.flowComponents = flowComponents;
+        this.timeOfLastModification = timeOfLastModification;
     }
 
     public FlowModel() {
         super(0L, 0L);
         this.flowName = "";
         this.description = "";
-        this.timeOfFlowComponentUpdate = "";
-        this.flowComponents = new ArrayList<>();
+        this.timeOfLastModification = "";
     }
 
     /**
@@ -61,26 +57,10 @@ public class FlowModel extends GenericBackendModel {
     }
 
     /**
-     * @return timeOfFlowComponentUpdate The time where the flowComponent within the flow was last updated
+     * @return time when the flow was last updated
      */
-    public String getTimeOfFlowComponentUpdate() {
-        return timeOfFlowComponentUpdate;
-    }
-
-    /**
-     * @return The list of flowcomponents in the flow
-     */
-    public List<FlowComponentModel> getFlowComponents() {
-        return flowComponents;
-    }
-
-    /**
-     * Set the list of flowcomponents in the flow
-     *
-     * @param flowComponents The list of flowcomponents
-     */
-    public void setFlowComponents(List<FlowComponentModel> flowComponents) {
-        this.flowComponents = flowComponents;
+    public String getTimeOfLastModification() {
+        return timeOfLastModification;
     }
 
     /**
@@ -92,9 +72,7 @@ public class FlowModel extends GenericBackendModel {
         return flowName == null
                 || flowName.isEmpty()
                 || description == null
-                || description.isEmpty()
-                || flowComponents == null
-                || flowComponents.isEmpty();
+                || description.isEmpty();
     }
 
     /**
@@ -115,9 +93,7 @@ public class FlowModel extends GenericBackendModel {
         FlowModel flowModel = (FlowModel) o;
 
         if (flowName != null ? !flowName.equals(flowModel.flowName) : flowModel.flowName != null) return false;
-        if (description != null ? !description.equals(flowModel.description) : flowModel.description != null)
-            return false;
-        return !(flowComponents != null ? !flowComponents.equals(flowModel.flowComponents) : flowModel.flowComponents != null);
+        return description != null ? description.equals(flowModel.description) : flowModel.description == null;
 
     }
 
@@ -125,7 +101,6 @@ public class FlowModel extends GenericBackendModel {
     public int hashCode() {
         int result = flowName != null ? flowName.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (flowComponents != null ? flowComponents.hashCode() : 0);
         return result;
     }
 }

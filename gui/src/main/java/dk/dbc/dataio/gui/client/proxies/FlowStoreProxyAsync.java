@@ -5,7 +5,6 @@ import dk.dbc.dataio.commons.types.FlowBinderIdent;
 import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
 import dk.dbc.dataio.gui.client.model.SinkModel;
 import dk.dbc.dataio.gui.client.model.SubmitterModel;
@@ -23,28 +22,11 @@ import java.util.List;
 
 public interface FlowStoreProxyAsync {
     // Flows
-    void createFlow(FlowModel model, AsyncCallback<FlowModel> async);
-
-    void updateFlow(FlowModel model, AsyncCallback<FlowModel> async);
-
     void deleteFlow(long flowId, long version, AsyncCallback<Void> async);
 
     void findAllFlows(AsyncCallback<List<FlowModel>> async);
 
     void getFlow(Long id, AsyncCallback<FlowModel> async);
-
-    // Flow Components
-    void createFlowComponent(FlowComponentModel model, AsyncCallback<FlowComponentModel> async);
-
-    void updateFlowComponent(FlowComponentModel model, AsyncCallback<FlowComponentModel> async);
-
-    void refreshFlowComponents(Long id, Long version, AsyncCallback<FlowModel> async);
-
-    void deleteFlowComponent(long flowComponentId, long version, AsyncCallback<Void> async);
-
-    void findAllFlowComponents(AsyncCallback<List<FlowComponentModel>> async);
-
-    void getFlowComponent(Long id, AsyncCallback<FlowComponentModel> async);
 
     // Flow Binders
     void createFlowBinder(FlowBinderModel model, AsyncCallback<FlowBinderModel> async);

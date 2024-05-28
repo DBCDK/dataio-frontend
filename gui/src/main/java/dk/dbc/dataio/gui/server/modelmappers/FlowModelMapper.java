@@ -1,7 +1,6 @@
 package dk.dbc.dataio.gui.server.modelmappers;
 
 import dk.dbc.dataio.commons.types.Flow;
-import dk.dbc.dataio.commons.types.FlowComponent;
 import dk.dbc.dataio.commons.types.FlowContent;
 import dk.dbc.dataio.commons.types.FlowView;
 import dk.dbc.dataio.gui.client.model.FlowModel;
@@ -33,8 +32,7 @@ public final class FlowModelMapper {
                 flow.getVersion(),
                 flow.getContent().getName(),
                 flow.getContent().getDescription(),
-                flow.getContent().getTimeOfFlowComponentUpdate() == null ? "" : simpleDateFormat.format(flow.getContent().getTimeOfFlowComponentUpdate()),
-                FlowComponentModelMapper.toListOfFlowComponentModels(flow.getContent().getComponents())
+                flow.getContent().getTimeOfLastModification() == null ? "" : simpleDateFormat.format(flow.getContent().getTimeOfLastModification())
         );
     }
 
@@ -44,8 +42,7 @@ public final class FlowModelMapper {
                 flowView.getVersion(),
                 flowView.getName(),
                 flowView.getDescription(),
-                flowView.getTimeOfComponentUpdate() == null ? "" : simpleDateFormat.format(flowView.getTimeOfComponentUpdate()),
-                FlowComponentModelMapper.fromListOfFlowComponentViews(flowView.getComponents())
+                flowView.getTimeOfLastModification() == null ? "" : simpleDateFormat.format(flowView.getTimeOfLastModification())
         );
     }
 
@@ -53,13 +50,12 @@ public final class FlowModelMapper {
      * Maps a model to flow content
      *
      * @param model          The model
-     * @param flowComponents the list of flow components
      * @return FlowContent The content of the Flow
      * @throws IllegalArgumentException if any matches were found
      */
-    public static FlowContent toFlowContent(FlowModel model, List<FlowComponent> flowComponents) throws IllegalArgumentException {
+    public static FlowContent toFlowContent(FlowModel model) throws IllegalArgumentException {
         if (model.isInputFieldsEmpty()) {
-            throw new IllegalArgumentException("model.name, model.description, model.flowcomponents cannot be empty");
+            throw new IllegalArgumentException("model.name, model.description cannot be empty");
         }
 
         List<String> matches = model.getDataioPatternMatches();
@@ -70,8 +66,7 @@ public final class FlowModelMapper {
             return new FlowContent(
                     model.getFlowName(),
                     model.getDescription(),
-                    flowComponents,
-                    model.getTimeOfFlowComponentUpdate().isEmpty() ? null : simpleDateFormat.parse(model.getTimeOfFlowComponentUpdate())
+                    model.getTimeOfLastModification().isEmpty() ? null : simpleDateFormat.parse(model.getTimeOfLastModification())
             );
         } catch (ParseException e) {
             throw new IllegalArgumentException("error parsing timeOfFlowComponentUpdate");

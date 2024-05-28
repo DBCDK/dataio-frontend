@@ -6,7 +6,6 @@ import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.exceptions.ProxyException;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
-import dk.dbc.dataio.gui.client.model.FlowComponentModel;
 import dk.dbc.dataio.gui.client.model.FlowModel;
 import dk.dbc.dataio.gui.client.model.SinkModel;
 import dk.dbc.dataio.gui.client.model.SubmitterModel;
@@ -41,16 +40,6 @@ public class FlowStoreProxyServlet extends RemoteServiceServlet implements FlowS
      */
 
     @Override
-    public FlowModel createFlow(FlowModel model) throws NullPointerException, ProxyException {
-        return flowStoreProxy.createFlow(model);
-    }
-
-    @Override
-    public FlowModel updateFlow(FlowModel model) throws NullPointerException, ProxyException {
-        return flowStoreProxy.updateFlow(model);
-    }
-
-    @Override
     public void deleteFlow(long flowId, long version) throws ProxyException {
         flowStoreProxy.deleteFlow(flowId, version);
     }
@@ -63,41 +52,6 @@ public class FlowStoreProxyServlet extends RemoteServiceServlet implements FlowS
     @Override
     public FlowModel getFlow(Long id) throws ProxyException {
         return flowStoreProxy.getFlow(id);
-    }
-
-
-    /*
-     * Flow Components
-     */
-
-    @Override
-    public FlowComponentModel createFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException {
-        return flowStoreProxy.createFlowComponent(model);
-    }
-
-    @Override
-    public FlowComponentModel updateFlowComponent(FlowComponentModel model) throws NullPointerException, ProxyException {
-        return flowStoreProxy.updateFlowComponent(model);
-    }
-
-    @Override
-    public FlowModel refreshFlowComponents(Long id, Long version) throws NullPointerException, ProxyException {
-        return flowStoreProxy.refreshFlowComponents(id, version);
-    }
-
-    @Override
-    public void deleteFlowComponent(long flowComponentId, long version) throws ProxyException {
-        flowStoreProxy.deleteFlowComponent(flowComponentId, version);
-    }
-
-    @Override
-    public List<FlowComponentModel> findAllFlowComponents() throws ProxyException {
-        return flowStoreProxy.findAllFlowComponents();
-    }
-
-    @Override
-    public FlowComponentModel getFlowComponent(Long id) throws ProxyException {
-        return flowStoreProxy.getFlowComponent(id);
     }
 
     /*

@@ -1,10 +1,7 @@
 package dk.dbc.dataio.gui.client.model;
 
-import dk.dbc.dataio.gui.client.modelBuilders.FlowComponentModelBuilder;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -21,8 +18,7 @@ public class FlowModelTest {
         assertThat(model.getVersion(), is(0L));
         assertThat(model.getFlowName(), is(""));
         assertThat(model.getDescription(), is(""));
-        assertThat(model.getTimeOfFlowComponentUpdate(), is(""));
-        assertThat(model.getFlowComponents().size(), is(0));
+        assertThat(model.getTimeOfLastModification(), is(""));
     }
 
     @Test
@@ -42,7 +38,7 @@ public class FlowModelTest {
     @Test
     public void isInputFieldsEmpty_emptyFlowDescriptionMapInput_returnsTrue() {
         FlowModel model = getTestModel();
-        model.setFlowComponents(new ArrayList<>());
+        model.setDescription("");
         assertThat(model.isInputFieldsEmpty(), is(true));
     }
 
@@ -73,7 +69,7 @@ public class FlowModelTest {
     }
 
     private FlowModel getTestModel() {
-        return new FlowModel(11, 22, "Name", "Description", "2016-11-18 15:24:40", Collections.singletonList(new FlowComponentModelBuilder().build()));
+        return new FlowModel(11, 22, "Name", "Description", "2016-11-18 15:24:40");
     }
 
 }

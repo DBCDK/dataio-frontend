@@ -17,25 +17,12 @@ public interface Texts extends Constants {
     String columnHeader_Description();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String columnHeader_FlowComponents();
+    String columnHeader_TimeOfLastModification();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String columnHeader_TimeOfFlowComponentUpdate();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String columnHeader_Action_Refresh();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String columnHeader_Action_Edit();
+    String columnHeader_Action_Delete();
 
     // Buttons
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String button_Refresh();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String button_Edit();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String button_Create();
-
+    String button_Delete();
 }
