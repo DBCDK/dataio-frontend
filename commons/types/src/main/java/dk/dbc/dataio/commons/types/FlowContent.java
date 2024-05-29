@@ -1,6 +1,7 @@
 package dk.dbc.dataio.commons.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dk.dbc.invariant.InvariantUtil;
@@ -12,6 +13,7 @@ import java.util.Date;
  * FlowContent DTO class.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FlowContent implements Serializable {
     private static final long serialVersionUID = 5520247158829273054L;
 
