@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import dk.dbc.dataio.commons.types.config.ConfigConstants;
-import dk.dbc.dataio.gui.client.pages.job.show.ShowAcctestJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowPeriodicJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowTestJobsPlace;
@@ -38,8 +37,6 @@ public class NavigationPanel extends DockLayoutPanel {
     TreeItem periodicJobs;
     @UiField
     TreeItem testJobs;
-    @UiField
-    TreeItem acctestJobs;
     @UiField
     TreeItem submitters;
     @UiField
@@ -99,7 +96,6 @@ public class NavigationPanel extends DockLayoutPanel {
         jobs.setUserObject(ShowJobsPlace.class);
         periodicJobs.setUserObject(ShowPeriodicJobsPlace.class);
         testJobs.setUserObject(ShowTestJobsPlace.class);
-        acctestJobs.setUserObject(ShowAcctestJobsPlace.class);
         flowBinders.setUserObject(dk.dbc.dataio.gui.client.pages.flowbinder.show.Place.class);
         flows.setUserObject(dk.dbc.dataio.gui.client.pages.flow.show.Place.class);
         harvesters.setUserObject(rrHarvesters);
@@ -179,9 +175,6 @@ public class NavigationPanel extends DockLayoutPanel {
         }
         if (object == ShowTestJobsPlace.class) {
             return new ShowTestJobsPlace();
-        }
-        if (object == ShowAcctestJobsPlace.class) {
-            return new ShowAcctestJobsPlace();
         }
         if (object == dk.dbc.dataio.gui.client.pages.flowbinder.show.Place.class) {
             return new dk.dbc.dataio.gui.client.pages.flowbinder.show.Place();

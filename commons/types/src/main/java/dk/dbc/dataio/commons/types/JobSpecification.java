@@ -23,7 +23,6 @@ public class JobSpecification implements Serializable {
         TRANSIENT,
         PERSISTENT,
         TEST,
-        ACCTEST("processor::acctest"),
         INFOMEDIA,
         PERIODIC,
         COMPACTED,

@@ -10,7 +10,6 @@ import dk.dbc.dataio.commons.types.JobSpecification;
 import dk.dbc.dataio.gui.client.components.log.LogPanel;
 import dk.dbc.dataio.gui.client.components.log.LogPanelMessages;
 import dk.dbc.dataio.gui.client.exceptions.ProxyErrorTranslator;
-import dk.dbc.dataio.gui.client.pages.job.show.ShowAcctestJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowTestJobsPlace;
 import dk.dbc.dataio.gui.client.util.Format;
@@ -228,9 +227,6 @@ public class PresenterEditImpl<Place extends EditPlace> extends PresenterImpl {
 
     private void goToTypeOfJobPlace(JobSpecification.Type type) {
         switch (type) {
-            case ACCTEST:
-                placeController.goTo(new ShowAcctestJobsPlace()); // ACCTEST
-                break;
             case TEST:
                 placeController.goTo(new ShowTestJobsPlace());       // TEST
                 break;

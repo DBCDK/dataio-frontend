@@ -9,7 +9,6 @@ import com.google.gwtmockito.GwtMockitoTestRunner;
 import dk.dbc.dataio.gui.client.components.popup.PopupListBox;
 import dk.dbc.dataio.gui.client.pages.job.show.Presenter;
 import dk.dbc.dataio.gui.client.pages.job.show.PresenterJobsImpl;
-import dk.dbc.dataio.gui.client.pages.job.show.ShowAcctestJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowTestJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.View;
@@ -129,7 +128,6 @@ public class JobFilterTest {
         assertThat(jobFilter.availableJobFilterList, is(notNullValue()));
         assertThat(jobFilter.availableJobFilterList.getJobFilters(ShowJobsPlace.class.getSimpleName()).size(), is(jobFilterList.getJobFilters(ShowJobsPlace.class.getSimpleName()).size()));
         assertThat(jobFilter.availableJobFilterList.getJobFilters(ShowTestJobsPlace.class.getSimpleName()).size(), is(jobFilterList.getJobFilters(ShowTestJobsPlace.class.getSimpleName()).size()));
-        assertThat(jobFilter.availableJobFilterList.getJobFilters(ShowAcctestJobsPlace.class.getSimpleName()).size(), is(jobFilterList.getJobFilters(ShowAcctestJobsPlace.class.getSimpleName()).size()));
     }
 
     @Test

@@ -110,8 +110,7 @@ public class JobRerunSchemeParser {
     }
 
     private Sink lookupSink(JobInfoSnapshot jobInfoSnapshot) throws FlowStoreServiceConnectorException {
-        if (jobInfoSnapshot.getSpecification().getType() == JobSpecification.Type.ACCTEST
-                || jobInfoSnapshot.getFlowStoreReferences() == null || jobInfoSnapshot.getFlowStoreReferences().getReference(FlowStoreReferences.Elements.SINK) == null) {
+        if (jobInfoSnapshot.getFlowStoreReferences() == null || jobInfoSnapshot.getFlowStoreReferences().getReference(FlowStoreReferences.Elements.SINK) == null) {
             return null;
         }
         return flowStoreServiceConnector.getSink(jobInfoSnapshot.getFlowStoreReferences().getReference(FlowStoreReferences.Elements.SINK).getId());
