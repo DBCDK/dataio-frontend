@@ -526,7 +526,7 @@ public class PresenterImplTest extends PresenterImplTestBase {
         when(mockedContent.getDescription()).thenReturn("Description");
         when(mockedContent.getDestination()).thenReturn("Destination");
         when(mockedContent.getFormat()).thenReturn("Format");
-        when(mockedContent.getType()).thenReturn(JobSpecification.Type.ACCTEST);
+        when(mockedContent.getType()).thenReturn(JobSpecification.Type.TEST);
         when(mockedContent.isEnabled()).thenReturn(true);
 
         // Test
@@ -591,7 +591,6 @@ public class PresenterImplTest extends PresenterImplTestBase {
         verify(list).addAvailableItem("TRANSIENT");
         verify(list).addAvailableItem("PERSISTENT");
         verify(list).addAvailableItem("TEST");
-        verify(list).addAvailableItem("ACCTEST");
         verify(list).addAvailableItem("INFOMEDIA");
         verify(list).addAvailableItem("PERIODIC");
         verify(list).setSelectedValue(value);

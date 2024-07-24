@@ -28,7 +28,7 @@ public class JobRerunSchemeParserTest {
     @Test
     public void parse_previewJob_hasActionCopy() throws FlowStoreServiceConnectorException {
         final JobInfoSnapshot jobInfoSnapshot = new JobInfoSnapshot().withNumberOfChunks(0).withNumberOfItems(5)
-                .withSpecification(new JobSpecification().withType(JobSpecification.Type.ACCTEST));
+                .withSpecification(new JobSpecification().withType(JobSpecification.Type.TEST));
 
         final JobRerunSchemeParser jobRerunSchemeParser = new JobRerunSchemeParser(flowStoreServiceConnector);
 
@@ -43,7 +43,7 @@ public class JobRerunSchemeParserTest {
     @Test
     public void parse_fatalErrorJob_hasActionCopy() throws FlowStoreServiceConnectorException {
         final JobInfoSnapshot jobInfoSnapshot = new JobInfoSnapshot().withFatalError(true)
-                .withSpecification(new JobSpecification().withType(JobSpecification.Type.ACCTEST));
+                .withSpecification(new JobSpecification().withType(JobSpecification.Type.TEST));
 
         final JobRerunSchemeParser jobRerunSchemeParser = new JobRerunSchemeParser(flowStoreServiceConnector);
 
@@ -57,7 +57,7 @@ public class JobRerunSchemeParserTest {
 
     @Test
     public void parse_acceptanceTestJob_hasActionRerunAndRerunAllIsTypeOriginalFile() throws FlowStoreServiceConnectorException {
-        final JobInfoSnapshot jobInfoSnapshot = getJobInfoSnapshotContainingFailed().withSpecification(new JobSpecification().withType(JobSpecification.Type.ACCTEST));
+        final JobInfoSnapshot jobInfoSnapshot = getJobInfoSnapshotContainingFailed().withSpecification(new JobSpecification().withType(JobSpecification.Type.TEST));
         final JobRerunSchemeParser jobRerunSchemeParser = new JobRerunSchemeParser(flowStoreServiceConnector);
 
         // Subject under test

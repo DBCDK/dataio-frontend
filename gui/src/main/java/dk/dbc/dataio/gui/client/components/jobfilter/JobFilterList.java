@@ -1,6 +1,5 @@
 package dk.dbc.dataio.gui.client.components.jobfilter;
 
-import dk.dbc.dataio.gui.client.pages.job.show.ShowAcctestJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowPeriodicJobsPlace;
 import dk.dbc.dataio.gui.client.pages.job.show.ShowTestJobsPlace;
@@ -52,15 +51,6 @@ final class JobFilterList {
                 // Add new Job Filters here...
         ));
         jobFilters.put(ShowTestJobsPlace.class.getSimpleName(), Arrays.asList(
-                new JobFilterItem(new SinkJobFilter("", false), false),
-                new JobFilterItem(new SubmitterJobFilter("", false), false),
-                new JobFilterItem(new DateJobFilter("", false), false),
-                new JobFilterItem(new ErrorJobFilter("processing,delivering,jobcreation", false), false),
-                new JobFilterItem(new JobStatusFilter("active", false), false),
-                new JobFilterItem(new ItemJobFilter("", false), false)
-                // Add new Job Filters here...
-        ));
-        jobFilters.put(ShowAcctestJobsPlace.class.getSimpleName(), Arrays.asList(
                 new JobFilterItem(new SinkJobFilter("", false), false),
                 new JobFilterItem(new SubmitterJobFilter("", false), false),
                 new JobFilterItem(new DateJobFilter("", false), false),

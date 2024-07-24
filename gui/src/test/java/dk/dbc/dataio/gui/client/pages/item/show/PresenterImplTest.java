@@ -324,12 +324,6 @@ public class PresenterImplTest extends PresenterImplTestBase {
             .withStateModel(new StateModel().withProcessing(new StateElement().withFailed(1).withSucceeded(1)))
             .withType(JobSpecification.Type.TEST);
 
-    private JobModel testJobModelIgnored = new JobModel()
-            .withJobId("JobIgnored2")
-            .withNumberOfItems(2)
-            .withStateModel(new StateModel().withPartitioning(new StateElement().withIgnored(1)))
-            .withType(JobSpecification.Type.ACCTEST).withWorkflowNoteModel(new WorkflowNoteModelBuilder().build());
-
     private Notification testJobNotificationCompleted = new Notification()
             .withType(Notification.Type.JOB_COMPLETED)
             .withStatus(Notification.Status.COMPLETED);
@@ -506,20 +500,6 @@ public class PresenterImplTest extends PresenterImplTestBase {
         genericMockedDetailedTabsAssert(false, true, false, 3);
     }
 
-    @Test
-    public void itemSelected_callItemSelectedForAcceptanceTestJob_ok() {
-        setupPresenterImpl();
-        presenterImpl.itemSearchType = ItemListCriteria.Field.JOB_ID;
-        presenterImpl.type = JobSpecification.Type.ACCTEST;
-
-        // Subject under test
-        presenterImpl.itemSelected(mockedItemsListView, testModelDeliveringFailed);
-
-        // Verify Test
-        // Default tab index for acceptance-test jobs is: sink result
-        genericMockedDetailedTabsAssert(false, true, true, 4);
-    }
-
     private void genericMockedDetailedTabsAssert(boolean isFatal, boolean hasDiagnostics, boolean isAccTest, int selectedTabIndex) {
         verify(mockedDetailedTabs).clear();
         if (isFatal) {
@@ -616,28 +596,6 @@ public class PresenterImplTest extends PresenterImplTestBase {
         verify(mockedExportLinkItemFailedInDelivering).setVisible(true);
         verify(mockedExportLinkItemFailedInDelivering).setHrefAndText(anyString());
         verifyNoMoreInteractions(mockedExportLinkItemFailedInDelivering);
-    }
-
-    @Test
-    public void getJob_callbackWithSuccessAndIgnoredJobs_jobFetchedCorrectly() {
-        setupPresenterImplConcrete();
-        presenterImpl.start(mockedContainerWidget, mockedEventBus);
-
-        // Test Subject Under Test
-        presenterImpl.getJobsCallback.onSuccess(Collections.singletonList(testJobModelIgnored));
-
-        // Verify Test
-        verify(mockedDecoratedTabPanel).selectTab(ViewWidget.IGNORED_ITEMS_TAB_INDEX);
-
-        // 2 times because all are being hidden through hideJobTabs() and only the relevant tabs are enabled again
-        verify(mockedTabBar, times(2)).getTab(ViewWidget.ALL_ITEMS_TAB_INDEX);
-        verify(mockedTabBar, times(2)).getTab(ViewWidget.IGNORED_ITEMS_TAB_INDEX);
-        verify(mockedTabBar, times(2)).getTab(ViewWidget.JOB_INFO_TAB_CONTENT);
-        verify(mockedTabBar, times(2)).getTab(ViewWidget.WORKFLOW_NOTE_TAB_CONTENT);
-
-        verify(mockedTabBar, times(1)).getTab(ViewWidget.FAILED_ITEMS_TAB_INDEX);
-        verify(mockedTabBar, times(1)).getTab(ViewWidget.JOB_DIAGNOSTIC_TAB_CONTENT);
-        verify(mockedTabBar, times(1)).getTab(ViewWidget.JOB_NOTIFICATION_TAB_CONTENT);
     }
 
     @Test

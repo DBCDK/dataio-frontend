@@ -718,17 +718,9 @@ public class PresenterImpl<P extends Place> extends AbstractActivity implements 
             tabIndexes.put(ItemsListView.JAVASCRIPT_LOG_TAB_CONTENT, 0);
             tabIndexes.put(ItemsListView.INPUT_POST_TAB_CONTENT, 1);
             tabIndexes.put(ItemsListView.OUTPUT_POST_TAB_CONTENT, 2);
-            if (type == JobSpecification.Type.ACCTEST) {
-                tabIndexes.put(ItemsListView.NEXT_OUTPUT_POST_TAB_CONTENT, 3);
-                tabIndexes.put(ItemsListView.SINK_RESULT_TAB_CONTENT, 4);
-                if (!itemModel.getDiagnosticModels().isEmpty()) {
-                    tabIndexes.put(ItemsListView.ITEM_DIAGNOSTIC_TAB_CONTENT, 5);
-                }
-            } else {
-                tabIndexes.put(ItemsListView.SINK_RESULT_TAB_CONTENT, 3);
-                if (!itemModel.getDiagnosticModels().isEmpty()) {
-                    tabIndexes.put(ItemsListView.ITEM_DIAGNOSTIC_TAB_CONTENT, 4);
-                }
+            tabIndexes.put(ItemsListView.SINK_RESULT_TAB_CONTENT, 3);
+            if (!itemModel.getDiagnosticModels().isEmpty()) {
+                tabIndexes.put(ItemsListView.ITEM_DIAGNOSTIC_TAB_CONTENT, 4);
             }
         }
     }
@@ -774,12 +766,8 @@ public class PresenterImpl<P extends Place> extends AbstractActivity implements 
         if (itemModel.isDiagnosticFatal()) {
             listView.detailedTabs.selectTab(tabIndexes.get(ItemsListView.ITEM_DIAGNOSTIC_TAB_CONTENT));
         } else {
-            // Acceptance test job: Show sink result
-            if (type == JobSpecification.Type.ACCTEST) {
-                listView.detailedTabs.selectTab(tabIndexes.get(ItemsListView.SINK_RESULT_TAB_CONTENT));
-            }
             // Item failed or ignored in delivering: Show sink result
-            else if (itemSearchType == ItemListCriteria.Field.STATE_FAILED && status == ItemModel.LifeCycle.DELIVERING_FAILED
+            if (itemSearchType == ItemListCriteria.Field.STATE_FAILED && status == ItemModel.LifeCycle.DELIVERING_FAILED
                     || itemSearchType == ItemListCriteria.Field.STATE_IGNORED && status == ItemModel.LifeCycle.DELIVERING_IGNORED) {
                 listView.detailedTabs.selectTab(tabIndexes.get(ItemsListView.SINK_RESULT_TAB_CONTENT));
             }
