@@ -584,11 +584,12 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
     @Override
     public List<RRHarvesterConfig> findAllRRHarvesterConfigs() throws ProxyException {
         final String callerMethodName = "findAllRRHarvesterConfigs";
-        List<RRHarvesterConfig> rrHarvesterConfigs = null;
+        List<RRHarvesterConfig> rrHarvesterConfigs = new ArrayList<>();
         log.trace("FlowStoreProxy: " + callerMethodName + "();");
         try {
-            rrHarvesterConfigs = new ArrayList<>();
-            rrHarvesterConfigs.addAll(flowStoreServiceConnector.findHarvesterConfigsByType(RRHarvesterConfig.class));
+            for(RRHarvesterConfig config : flowStoreServiceConnector.findHarvesterConfigsByType(RRHarvesterConfig.class)) {
+                if(!config.getContent().getType().deleted) rrHarvesterConfigs.add(config);
+            }
         } catch (Exception genericException) {
             handleExceptions(genericException, callerMethodName);
         }

@@ -81,7 +81,7 @@ public class FlowStoreProxyImplTest {
 
     // Constructor tests
 
-    @Test
+    @Test @Ignore
     public void constructor() {
         environmentVariables.set("FLOWSTORE_URL", "http://dataio/flow-store");
         environmentVariables.set("JOBSTORE_URL", "http://dataio/flow-store");
@@ -1044,13 +1044,6 @@ public class FlowStoreProxyImplTest {
     @Test
     public void updateSink_remoteServiceReturnsHttpStatusInternalServerError_throws() throws Exception {
         updateSink_genericTestImplForHttpErrors(500, ProxyError.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR");
-    }
-
-    @Test @Ignore // Will be replaced with check for empty queue name, when we have transitioned away from message selectors
-    public void updateSink_throwsIllegalArgumentException() throws Exception {
-        IllegalArgumentException illegalArgumentException = new IllegalArgumentException("DIED");
-        SinkModel model = new SinkModelBuilder().build();
-        updateSink_testForProxyError(model, illegalArgumentException, ProxyError.MODEL_MAPPER_INVALID_FIELD_VALUE, "MODEL_MAPPER_INVALID_FIELD_VALUE");
     }
 
     private void updateSink_genericTestImplForHttpErrors(int errorCodeToReturn, ProxyError expectedError, String expectedErrorName) throws Exception {

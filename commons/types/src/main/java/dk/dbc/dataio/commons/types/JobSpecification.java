@@ -23,19 +23,22 @@ public class JobSpecification implements Serializable {
         TRANSIENT,
         PERSISTENT,
         TEST,
+        ACCTEST("expired", true),
         INFOMEDIA,
         PERIODIC,
         COMPACTED,
         SUPER_TRANSIENT;
 
         public final String processorQueue;
+        public final boolean deleted;
 
-        Type(String processorQueue) {
+        Type(String processorQueue, boolean deleted) {
             this.processorQueue = processorQueue;
+            this.deleted = deleted;
         }
 
         Type() {
-            this.processorQueue = "processor::business";
+            this("processor::business", false);
         }
     }
 
