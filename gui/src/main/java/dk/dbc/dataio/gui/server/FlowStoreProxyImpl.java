@@ -8,7 +8,6 @@ import dk.dbc.dataio.commons.types.Flow;
 import dk.dbc.dataio.commons.types.FlowBinder;
 import dk.dbc.dataio.commons.types.FlowBinderIdent;
 import dk.dbc.dataio.commons.types.FlowView;
-import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.commons.types.Sink;
 import dk.dbc.dataio.commons.types.Submitter;
 import dk.dbc.dataio.commons.utils.cache.Cache;
@@ -818,60 +817,6 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
             handleExceptions(genericException, callerMethodName);
         }
         return config;
-    }
-
-    /*
-     * Gatekeeper destinations
-     */
-
-    @Override
-    public GatekeeperDestination createGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws NullPointerException, ProxyException {
-        final String callerMethodName = "createGatekeeperDestination";
-        GatekeeperDestination destination = null;
-        log.trace("FlowStoreProxy: " + callerMethodName + "();");
-        try {
-            destination = flowStoreServiceConnector.createGatekeeperDestination(gatekeeperDestination);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return destination;
-    }
-
-    @Override
-    public List<GatekeeperDestination> findAllGatekeeperDestinations() throws ProxyException {
-        final String callerMethodName = "findAllGatekeeperDestinations";
-        List<GatekeeperDestination> destinations = null;
-        log.trace("FlowStoreProxy: " + callerMethodName + "();");
-        try {
-            destinations = flowStoreServiceConnector.findAllGatekeeperDestinations();
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return destinations;
-    }
-
-    @Override
-    public void deleteGatekeeperDestination(long id) throws ProxyException {
-        final String callerMethodName = "deleteGatekeeperDestination";
-        log.trace("FlowStoreProxy: " + callerMethodName + "();");
-        try {
-            flowStoreServiceConnector.deleteGatekeeperDestination(id);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-    }
-
-    @Override
-    public GatekeeperDestination updateGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws ProxyException {
-        final String callerMethodName = "updateGatekeeperDestination";
-        GatekeeperDestination updatedGatekeeperDestination = null;
-        log.trace("FlowStoreProxy: " + callerMethodName + "();");
-        try {
-            updatedGatekeeperDestination = flowStoreServiceConnector.updateGatekeeperDestination(gatekeeperDestination);
-        } catch (Exception genericException) {
-            handleExceptions(genericException, callerMethodName);
-        }
-        return updatedGatekeeperDestination;
     }
 
 
