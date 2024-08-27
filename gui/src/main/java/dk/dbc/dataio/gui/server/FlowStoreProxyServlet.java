@@ -2,7 +2,6 @@ package dk.dbc.dataio.gui.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dk.dbc.dataio.commons.types.FlowBinderIdent;
-import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.exceptions.ProxyException;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
@@ -277,31 +276,6 @@ public class FlowStoreProxyServlet extends RemoteServiceServlet implements FlowS
     public DMatHarvesterConfig getDMatHarvesterConfig(long id) throws ProxyException {
         return flowStoreProxy.getDMatHarvesterConfig(id);
     }
-
-    /*
-     * Gatekeeper destinations
-     */
-
-    @Override
-    public GatekeeperDestination createGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws NullPointerException, ProxyException {
-        return flowStoreProxy.createGatekeeperDestination(gatekeeperDestination);
-    }
-
-    @Override
-    public List<GatekeeperDestination> findAllGatekeeperDestinations() throws ProxyException {
-        return flowStoreProxy.findAllGatekeeperDestinations();
-    }
-
-    @Override
-    public void deleteGatekeeperDestination(long id) throws ProxyException {
-        flowStoreProxy.deleteGatekeeperDestination(id);
-    }
-
-    @Override
-    public GatekeeperDestination updateGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws ProxyException {
-        return flowStoreProxy.updateGatekeeperDestination(gatekeeperDestination);
-    }
-
 
     /*
      * Other

@@ -2,7 +2,6 @@ package dk.dbc.dataio.gui.client.proxies;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import dk.dbc.dataio.commons.types.FlowBinderIdent;
-import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
 import dk.dbc.dataio.gui.client.model.FlowModel;
@@ -110,15 +109,6 @@ public interface FlowStoreProxyAsync {
     void findAllDMatHarvesterConfigs(AsyncCallback<List<DMatHarvesterConfig>> async);
 
     void getDMatHarvesterConfig(long id, AsyncCallback<DMatHarvesterConfig> async);
-
-    // Gatekeeper destinations
-    void createGatekeeperDestination(GatekeeperDestination gatekeeperDestination, AsyncCallback<GatekeeperDestination> async);
-
-    void findAllGatekeeperDestinations(AsyncCallback<List<GatekeeperDestination>> async);
-
-    void deleteGatekeeperDestination(long id, AsyncCallback<Void> async);
-
-    void updateGatekeeperDestination(GatekeeperDestination gatekeeperDestination, AsyncCallback<GatekeeperDestination> async);
 
     // Other
     void close(AsyncCallback<Void> async);
