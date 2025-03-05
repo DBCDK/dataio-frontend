@@ -1,7 +1,7 @@
 #!groovy
 
 String docker_images_log_stash_tag = "docker_images_log"
-String workerNode = "devel11"
+String workerNode = "devel11-java11"
 Boolean DEPLOY_TO_STAGING_CANDIDATE=false
 //Byg!!
 pipeline {
