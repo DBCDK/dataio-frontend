@@ -1,6 +1,5 @@
 package dk.dbc.dataio.gui.server;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnector;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnectorException;
 import dk.dbc.dataio.common.utils.flowstore.FlowStoreServiceConnectorUnexpectedStatusCodeException;
@@ -49,8 +48,7 @@ import dk.dbc.dataio.jobstore.types.criteria.ListOrderBy;
 import dk.dbc.dataio.querylanguage.Ordering;
 import dk.dbc.httpclient.HttpClient;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,8 +72,7 @@ public class FlowStoreProxyImpl implements FlowStoreProxy {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     FlowStoreProxyImpl() {
-        JacksonJsonProvider jacksonJsonProvider = new JacksonJaxbJsonProvider().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        final ClientConfig clientConfig = new ClientConfig().register(jacksonJsonProvider);
+        final ClientConfig clientConfig = new ClientConfig().register(new JacksonFeature());
         client = HttpClient.newClient(clientConfig);
         jobstoreClient = HttpClient.newClient(clientConfig);
         baseUrl = ServiceUtil.getStringValueFromSystemEnvironmentOrProperty("FLOWSTORE_URL");
