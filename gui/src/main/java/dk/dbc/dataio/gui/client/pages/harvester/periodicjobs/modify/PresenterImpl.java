@@ -37,7 +37,7 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
         this.metadata.put("origin", "dataio/gui/periodic-jobs");
 
         commonInjector.getUrlResolverProxyAsync().getUrl("FILESTORE_URL",
-                new AsyncCallback<String>() {
+                new AsyncCallback<>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         Window.alert(viewInjector.getTexts().error_JndiFileStoreFetchError());
@@ -137,15 +137,15 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
     }
 
     @Override
-    public void queryFileIdClicked(String buttonType) {
+    public void recordsFromFileClicked(String buttonType) {
         if ("REMOVE".equals(buttonType) && config != null) {
             // Remove old file from file store when overwriting
-            if (config.getContent().getQueryFileId() != null) {
-                removeFileStoreFile(config.getContent().getQueryFileId());
+            if (config.getContent().getRecordsFromFile() != null) {
+                removeFileStoreFile(config.getContent().getRecordsFromFile());
             }
-            config.getContent().withQueryFileId(null);
+            config.getContent().withRecordsFromFile(null);
             getView().query.setEnabled(true);
-            getView().queryFileId.setHrefAndText(null);
+            getView().recordsFromFile.setHrefAndText(null);
         }
     }
 
@@ -183,7 +183,7 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
     @Override
     public void fileStoreUploadChanged(String fileId) {
         if (config != null) {
-            final String oldFileId = config.getContent().getQueryFileId();
+            final String oldFileId = config.getContent().getRecordsFromFile();
             String newFileId = fileId;
             // Remove old file from file store when overwriting
             if (oldFileId != null && !oldFileId.equals(newFileId)) {
@@ -197,11 +197,11 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
                     newFileId = oldFileId;
                 }
             }
-            config.getContent().withQueryFileId(newFileId);
+            config.getContent().withRecordsFromFile(newFileId);
 
             if (newFileId != null && !newFileId.isEmpty()) {
                 getView().query.setEnabled(false);
-                getView().queryFileId.setHrefAndText(urlDataioFilestoreRs + "/files/" + newFileId);
+                getView().recordsFromFile.setHrefAndText(urlDataioFilestoreRs + "/files/" + newFileId);
 
                 commonInjector.getFileStoreProxyAsync().addMetadata(newFileId, metadata, new FileStoreFileAsyncCallback());
             }
@@ -492,8 +492,8 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
         view.description.setText(configContent.getDescription());
         view.resource.setText(getResourceName());
         view.query.setText(configContent.getQuery());
-        if (configContent.getQueryFileId() != null && !configContent.getQueryFileId().isEmpty()) {
-            view.queryFileId.setHrefAndText(urlDataioFilestoreRs + "/files/" + configContent.getQueryFileId());
+        if (configContent.getRecordsFromFile() != null && !configContent.getRecordsFromFile().isEmpty()) {
+            view.recordsFromFile.setHrefAndText(urlDataioFilestoreRs + "/files/" + configContent.getRecordsFromFile());
         }
         view.collection.setText(configContent.getCollection());
         view.destination.setText(configContent.getDestination());
@@ -509,7 +509,7 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
         view.enabled.setValue(configContent.isEnabled());
         view.status.setText("");
 
-        if (configContent.getQueryFileId() != null) {
+        if (configContent.getRecordsFromFile() != null) {
             view.query.setEnabled(false);
         }
     }
@@ -541,7 +541,7 @@ public abstract class PresenterImpl extends AbstractActivity implements Presente
                 || isUndefined(config.getContent().getSchedule())
                 || isUndefined(config.getContent().getDescription())
                 || isUndefined(config.getContent().getResource())
-                || isUndefined(config.getContent().getQuery()) && isUndefined(config.getContent().getQueryFileId())
+                || isUndefined(config.getContent().getQuery()) && isUndefined(config.getContent().getRecordsFromFile())
                 || isUndefined(config.getContent().getCollection())
                 || isUndefined(config.getContent().getDestination())
                 || isUndefined(config.getContent().getFormat())

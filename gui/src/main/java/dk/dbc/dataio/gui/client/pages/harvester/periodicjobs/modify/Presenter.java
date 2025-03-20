@@ -18,7 +18,7 @@ public interface Presenter extends GenericPresenter {
 
     void queryChanged(String query);
 
-    void queryFileIdClicked(String buttonType);
+    void recordsFromFileClicked(String buttonType);
 
     void fileStoreUploadChanged(String fileId);
 

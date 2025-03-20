@@ -64,6 +64,9 @@ public interface Texts extends Constants {
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String columnValue_HarvesterType_STANDARD_WITHOUT_EXPANSION();
 
+    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
+    String columnValue_HarvesterType_HAS_COVER_PAGE();
+
     // Button texts
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String button_NewPeriodicJobsHarvesterButton();

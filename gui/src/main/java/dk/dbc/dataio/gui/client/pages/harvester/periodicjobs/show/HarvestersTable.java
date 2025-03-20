@@ -231,6 +231,8 @@ public class HarvestersTable extends CellTable {
                 return texts.columnValue_HarvesterType_STANDARD_WITH_HOLDINGS();
             case STANDARD_WITHOUT_EXPANSION:
                 return texts.columnValue_HarvesterType_STANDARD_WITHOUT_EXPANSION();
+            case HAS_COVER_PAGE:
+                return texts.columnValue_HarvesterType_HAS_COVER_PAGE();
             default:
                 return type.name();
         }

@@ -70,7 +70,7 @@ public class PeriodicJobsHarvesterConfig
          */
         private String query;
 
-        private String queryFileId;
+        private String recordsFromFile;
 
         /**
          * The Solr collection to query
@@ -162,12 +162,12 @@ public class PeriodicJobsHarvesterConfig
             return this;
         }
 
-        public String getQueryFileId() {
-            return queryFileId;
+        public String getRecordsFromFile() {
+            return recordsFromFile;
         }
 
-        public Content withQueryFileId(String queryFileId) {
-            this.queryFileId = queryFileId;
+        public Content withRecordsFromFile(String recordsFromFile) {
+            this.recordsFromFile = recordsFromFile;
             return this;
         }
 
