@@ -31,10 +31,10 @@ public interface Texts extends com.google.gwt.i18n.client.Constants {
     String prompt_Query();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String prompt_QueryFileId();
+    String prompt_RecordsFromFile();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String queryFileId_Button_Remove();
+    String recordsFromFile_Button_Remove();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String prompt_Collection();
@@ -216,7 +216,7 @@ public interface Texts extends com.google.gwt.i18n.client.Constants {
     String help_Query();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String help_QueryFileId();
+    String help_RecordsFromFile();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String help_Resource();

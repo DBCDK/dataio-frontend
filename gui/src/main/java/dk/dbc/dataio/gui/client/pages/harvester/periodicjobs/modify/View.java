@@ -43,7 +43,7 @@ public class View extends ContentPanel<Presenter> implements IsWidget {
         holdingsTypeSelection.setTitle(texts.help_HoldingsTypeSelection());
         description.setTitle(texts.help_Description());
         query.setTitle(texts.help_Query());
-        queryFileId.setTitle(texts.help_QueryFileId());
+        recordsFromFile.setTitle(texts.help_RecordsFromFile());
         resource.setTitle(texts.help_Resource());
         schedule.setTitle(texts.help_Schedule());
         httpReceivingAgency.setTitle(texts.help_HttpReceivingAgency());
@@ -91,7 +91,7 @@ public class View extends ContentPanel<Presenter> implements IsWidget {
     @UiField
     PromptedTextArea query;
     @UiField
-    PromptedAnchorWithButton queryFileId;
+    PromptedAnchorWithButton recordsFromFile;
     @UiField
     PromptedFileStoreUpload fileStoreUpload;
     @UiField
@@ -214,15 +214,15 @@ public class View extends ContentPanel<Presenter> implements IsWidget {
     }
 
     @SuppressWarnings("unused")
-    @UiHandler("queryFileId")
-    void queryFileIdClicked(ValueChangeEvent<String> event) {
-        presenter.queryFileIdClicked(event.getValue());
+    @UiHandler("recordsFromFile")
+    void recordsFromFileClicked(ValueChangeEvent<String> event) {
+        presenter.recordsFromFileClicked(event.getValue());
         presenter.keyPressed();
     }
 
     @SuppressWarnings("unused")
     @UiHandler("fileStoreUpload")
-    void queryFileIdSubmitCompleted(FormPanel.SubmitCompleteEvent event) {
+    void recordsFromFileCompleted(FormPanel.SubmitCompleteEvent event) {
         String fileId = event.getResults();
 
         /*
