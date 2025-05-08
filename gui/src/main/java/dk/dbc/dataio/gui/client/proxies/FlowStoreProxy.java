@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import dk.dbc.dataio.commons.types.FlowBinderIdent;
-import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.gui.client.exceptions.ProxyException;
 import dk.dbc.dataio.gui.client.model.FlowBinderModel;
 import dk.dbc.dataio.gui.client.model.FlowBinderUsage;
@@ -116,15 +115,6 @@ public interface FlowStoreProxy extends RemoteService {
     List<DMatHarvesterConfig> findAllDMatHarvesterConfigs() throws ProxyException;
 
     DMatHarvesterConfig getDMatHarvesterConfig(long id) throws ProxyException;
-
-    // Gatekeeper destinations
-    GatekeeperDestination createGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws NullPointerException, ProxyException;
-
-    List<GatekeeperDestination> findAllGatekeeperDestinations() throws ProxyException;
-
-    void deleteGatekeeperDestination(long id) throws ProxyException;
-
-    GatekeeperDestination updateGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws ProxyException;
 
     // Other
     void close();

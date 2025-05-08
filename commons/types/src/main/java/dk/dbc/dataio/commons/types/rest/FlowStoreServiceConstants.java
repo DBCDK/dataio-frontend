@@ -3,7 +3,6 @@ package dk.dbc.dataio.commons.types.rest;
 public class FlowStoreServiceConstants {
     public static final String FLOWS = "flows";
     public static final String FLOW_BINDERS = "binders";
-    public static final String FLOW_COMPONENTS = "components";
     public static final String SUBMITTERS = "submitters";
     public static final String SINKS = "sinks";
 
@@ -41,9 +40,6 @@ public class FlowStoreServiceConstants {
     public static final String HARVESTER_CONFIGS_TYPE = "harvester-configs/types/{type}";
     public static final String HARVESTER_CONFIGS_TYPE_ENABLED = "harvester-configs/types/{type}/enabled";
     public static final String HARVESTER_CONFIG = "harvester-configs/{id}";
-
-    public static final String GATEKEEPER_DESTINATIONS = "gatekeeper/destinations";
-    public static final String GATEKEEPER_DESTINATION = "gatekeeper/destinations/{id}";
 
     private FlowStoreServiceConstants() {
     }

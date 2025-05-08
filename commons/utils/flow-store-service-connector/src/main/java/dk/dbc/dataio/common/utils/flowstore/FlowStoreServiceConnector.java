@@ -8,7 +8,6 @@ import dk.dbc.dataio.commons.types.FlowBinderIdent;
 import dk.dbc.dataio.commons.types.FlowContent;
 import dk.dbc.dataio.commons.types.FlowStoreError;
 import dk.dbc.dataio.commons.types.FlowView;
-import dk.dbc.dataio.commons.types.GatekeeperDestination;
 import dk.dbc.dataio.commons.types.Sink;
 import dk.dbc.dataio.commons.types.SinkContent;
 import dk.dbc.dataio.commons.types.Submitter;
@@ -853,120 +852,6 @@ public class FlowStoreServiceConnector {
             log.debug("FlowStoreServiceConnector: queryFlowBinders took {} milliseconds", stopWatch.getElapsedTime());
         }
     }
-
-    // ************************************************** GatekeeperDestinations *****************************************
-
-    /**
-     * persists the given GatekeeperDestination
-     *
-     * @param gatekeeperDestination to persist
-     * @return GatekeeperDestination
-     * @throws NullPointerException                                   if given null-valued argument
-     * @throws ProcessingException                                    on general communication error
-     * @throws FlowStoreServiceConnectorUnexpectedStatusCodeException if gatekeeperDestination creation failed due to invalid input data
-     * @throws FlowStoreServiceConnectorException                     on general failure to create gatekeeperDestination
-     */
-    public GatekeeperDestination createGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws FlowStoreServiceConnectorException {
-        final StopWatch stopWatch = new StopWatch();
-        try {
-            InvariantUtil.checkNotNullOrThrow(gatekeeperDestination, "gatekeeperDestination");
-            log.trace("FlowStoreServiceConnector: createGatekeeperDestination({}, {}, {}, {})",
-                    gatekeeperDestination.getSubmitterNumber(),
-                    gatekeeperDestination.getDestination(),
-                    gatekeeperDestination.getPackaging(),
-                    gatekeeperDestination.getFormat());
-            try (Response response = new HttpPost(failSafeHttpClient)
-                    .withBaseUrl(baseUrl)
-                    .withPathElements(FlowStoreServiceConstants.GATEKEEPER_DESTINATIONS)
-                    .withJsonData(gatekeeperDestination)
-                    .execute()) {
-                verifyResponseStatus(response, Response.Status.CREATED);
-                return readResponseEntity(response, GatekeeperDestination.class);
-            }
-        } finally {
-            log.debug("FlowStoreServiceConnector: createGatekeeperDestination took {} milliseconds", stopWatch.getElapsedTime());
-        }
-    }
-
-    /**
-     * Retrieves all gatekeeperDestinations from the flow-store
-     *
-     * @return a list containing the gatekeeperDestinations found sorted by submitterNumber in ascending order
-     * @throws ProcessingException                on general communication error
-     * @throws FlowStoreServiceConnectorException on failure to retrieve gatekeeperDestinations
-     */
-    public List<GatekeeperDestination> findAllGatekeeperDestinations() throws ProcessingException, FlowStoreServiceConnectorException {
-        final StopWatch stopWatch = new StopWatch();
-        try {
-            log.trace("FlowStoreServiceConnector: findAllGatekeeperDestinations();");
-            try (Response response = new HttpGet(failSafeHttpClient)
-                    .withBaseUrl(baseUrl)
-                    .withPathElements(FlowStoreServiceConstants.GATEKEEPER_DESTINATIONS)
-                    .execute()) {
-                verifyResponseStatus(response, Response.Status.OK);
-                return readResponseGenericTypeEntity(response, new GenericType<List<GatekeeperDestination>>() {
-                });
-            }
-        } finally {
-            log.debug("FlowStoreServiceConnector: findAllGatekeeperDestinations took {} milliseconds", stopWatch.getElapsedTime());
-        }
-    }
-
-    /**
-     * Deletes an existing gatekeeperDestination from the flow-store
-     *
-     * @param id, the database related ID
-     * @throws ProcessingException                                    on general communication error
-     * @throws FlowStoreServiceConnectorUnexpectedStatusCodeException if an unexpected HTTP code is returned
-     */
-    public void deleteGatekeeperDestination(long id) throws ProcessingException, FlowStoreServiceConnectorUnexpectedStatusCodeException {
-        final StopWatch stopWatch = new StopWatch();
-        try {
-            log.trace("FlowStoreServiceConnector: deleteGatekeeperDestination({})", id);
-            final PathBuilder pathBuilder = new PathBuilder(FlowStoreServiceConstants.GATEKEEPER_DESTINATION)
-                    .bind(FlowStoreServiceConstants.ID_VARIABLE, Long.toString(id));
-
-            try (Response response = new HttpDelete(failSafeHttpClient)
-                    .withBaseUrl(baseUrl)
-                    .withPathElements(pathBuilder.build())
-                    .execute()) {
-                verifyResponseStatus(response, NO_CONTENT);
-            }
-        } finally {
-            log.debug("FlowStoreServiceConnector: deleteGatekeeperDestination took {} milliseconds", stopWatch.getElapsedTime());
-        }
-    }
-
-    /**
-     * Updates an existing gatekeeper destination from the flow-store
-     *
-     * @param gatekeeperDestination containing the updated values
-     * @return the updated gatekeeperDestination
-     * @throws ProcessingException                on general communication error
-     * @throws FlowStoreServiceConnectorException on failure to update the gatekeeper destination
-     */
-    public GatekeeperDestination updateGatekeeperDestination(GatekeeperDestination gatekeeperDestination) throws ProcessingException, FlowStoreServiceConnectorException {
-        final StopWatch stopWatch = new StopWatch();
-        try {
-            log.trace("FlowStoreServiceConnector: updateGatekeeperDestination()");
-            InvariantUtil.checkNotNullOrThrow(gatekeeperDestination, "gatekeeperDestination");
-
-            final PathBuilder path = new PathBuilder(FlowStoreServiceConstants.GATEKEEPER_DESTINATION)
-                    .bind(FlowStoreServiceConstants.ID_VARIABLE, Long.toString(gatekeeperDestination.getId()));
-
-            try (Response response = new HttpPost(failSafeHttpClient)
-                    .withBaseUrl(baseUrl)
-                    .withPathElements(path.build())
-                    .withJsonData(gatekeeperDestination)
-                    .execute()) {
-                verifyResponseStatus(response, Response.Status.OK);
-                return readResponseEntity(response, GatekeeperDestination.class);
-            }
-        } finally {
-            log.debug("FlowStoreServiceConnector: updateGatekeeperDestination took {} milliseconds", stopWatch.getElapsedTime());
-        }
-    }
-
 
     // ************************************************** HarvesterConfig *********************************************
 
