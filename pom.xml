@@ -18,7 +18,7 @@
 
     <properties>
         <tag>devel</tag>
-        <java.image>docker-dbc.artifacts.dbccloud.dk/payara5-micro:latest</java.image>
+        <java.image>docker-dbc.artifacts.dbccloud.dk/payara5-micro:old-202522</java.image>
         <docker.deploydir>/opt/payara5/deployments</docker.deploydir>
 
         <svnkit.version>1.7.8</svnkit.version>
