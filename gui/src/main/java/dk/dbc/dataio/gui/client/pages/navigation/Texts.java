@@ -95,9 +95,6 @@ public interface Texts extends Constants {
     String menu_Gatekeeper();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
-    String menu_IoTraffic();
-
-    @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
     String menu_Ftp();
 
     @DefaultStringValue(MainConstants.TRANSLATED_TEXT_IS_MISSING)
