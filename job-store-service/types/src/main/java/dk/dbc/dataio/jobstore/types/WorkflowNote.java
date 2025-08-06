@@ -2,7 +2,6 @@ package dk.dbc.dataio.jobstore.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dk.dbc.invariant.InvariantUtil;
 
 import java.io.Serializable;
 
@@ -26,7 +25,7 @@ public class WorkflowNote implements Serializable {
                         @JsonProperty("description") String description) throws NullPointerException, IllegalArgumentException {
 
         this.processed = processed;
-        this.assignee = InvariantUtil.checkNotNullNotEmptyOrThrow(assignee, "assignee");
+        this.assignee = assignee;
         this.description = description;
     }
 
